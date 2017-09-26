@@ -35,104 +35,100 @@ class LastPrice {
     var low: Double?
     var close: Double?
     var volume: Double?
+    var signal: Double?
+    
+    init(ticker: String, date: String, open: Double, high:Double, low:Double, close:Double, volume:Double, signal:Double ) {
+        self.ticker = ticker
+        self.date = date
+        self.open = open
+        self.high = high
+        self.low = low
+        self.close = close
+        self.volume = volume
+        self.signal = signal
+    }
 }
 
 class ViewController: UIViewController {
     
     var ref: DatabaseReference!
+    
+    let currentChild = "-KupyHKs9UxNJiBn1iYO"
 
     var userEmail = ""
+ 
+    var lastPriceList = [LastPrice]()
     
-    var lastPriceObject = LastPrice()
-    
-    var lastPrice = [LastPrice]()
+    var json:[String:AnyObject]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         authFirebase()
+        fetchValuesFromFireBase()
         
-        //MARK: - TODO - alert when new upload - get the child name
-        //MARK: - TODO - find last child uploaded
+        //MARK: - TODO make tableview
+        //MARK: - TODO - only load last file?
+        //MARK: - TODO - sort by date
     }
     
     func authFirebase() {
         
-        ref = Database.database().reference()
+        ref = Database.database().reference().child(currentChild).child("Table1")
         let email = "whansen1@mac.com"
         let password = "123456"
         
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
    
             if error == nil {
-
                 self.userEmail = (user?.email!)!
-                self.observeMessages()
             } else {
                 print(error ?? "something went wrong getting error")
             }
         }
     }
 
-    //Method to load Messages
-    func observeMessages(){
-        
-        
-        
-        print("\nnow in observeMessages")
-        // M3O9kJFvFzfmDaoGzjqqwKkFDhw2  this is user id
-
-        let userID = Auth.auth().currentUser?.uid
-        print("\nuserID: \(String(describing: userID!)) userEmail: \(userEmail)\n")
-        
-        let currentChild = "-KupyHKs9UxNJiBn1iYO"
-        
-       // lastPrice.removeAll()
-        
-        Database.database().reference().child(currentChild).child("Table1").queryOrderedByKey().observe(.childAdded, with:
-        {
-                (snapshot) in
-                
-                let json = snapshot.value as? [String:AnyObject]
-                //print(json!)
-                
-//                let dates = json!["date"] as? String
-//                print("\(dates!)\n")
+    func fetchValuesFromFireBase() {
+    
+        //observing the data changes
+        ref.observe(DataEventType.value, with: { (snapshot) in
             
+            //if the reference have some values
+            if snapshot.childrenCount > 0 {
                 
+                self.lastPriceList.removeAll()
                 
-                //lastPriceObject.ticker = ticker
-                
-                if let date = json!["date"] as? String {
-                    self.lastPriceObject.date = date
-                    print(date)
-                } else {
-                    print("No Date string")
+                //iterating through all the values
+                for artists in snapshot.children.allObjects as! [DataSnapshot] {
+                    //getting values
+                    let artistObject = artists.value as? [String: AnyObject]
+                    
+                    let date    = artistObject?["date"] as! String
+                    
+                    let open    = (artistObject?["open"] as! NSString).doubleValue
+ 
+                    let high    = (artistObject?["high"] as! NSString).doubleValue
+                    
+                    let low     = (artistObject?["low"] as! NSString).doubleValue
+                   
+                    let close   = (artistObject?["close"] as! NSString).doubleValue
+                    
+                    let lastPrice = LastPrice(ticker: "SPY", date: date, open: open, high: high, low: low, close: close, volume: 10000, signal: 0 )
+                    //  appending it to list
+                    self.lastPriceList.append(lastPrice)
                 }
                 
-                if let open = json!["open"] as? Double {
-                    self.lastPriceObject.open = open
-                }
+                //reloading the tableview
+                //self.tableViewArtists.reloadData()
                 
-                if let high = json!["high"] as? Double {
-                    self.lastPriceObject.high = high
+                for item in self.lastPriceList {
+                    print(item.date!, item.open!, item.high!, item.low!, item.close!)
                 }
-                if let low = json!["low"] as? Double {
-                    self.lastPriceObject.low = low
-                }
-                
-                if let close = json!["close"] as? Double {
-                    self.lastPriceObject.close = close
-                }
-                self.lastPrice.append(self.lastPriceObject)
-                
+            }
         })
-        
-//        print("lastPrice: \(self.lastPrice)")
-//        for item in lastPrice {
-//            print(item.date!)
-//        }
+    
     }
+    
 }
 
 
