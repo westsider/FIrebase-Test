@@ -30,3 +30,11 @@ class LastPrice {
         self.signal = signal
     }
 }
+
+class LastPriceTable {
+    
+    func sortPrices(arrayToSort: [LastPrice])-> [LastPrice] {
+        
+        return arrayToSort.sorted(by: { $0.date?.compare($1.date!) == .orderedAscending })
+    }
+}

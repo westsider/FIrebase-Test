@@ -124,7 +124,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     self.lastPriceList.append(lastPrice)
                 }
                 
-                self.lastPriceList = self.sortPrices(arrayToSort: self.lastPriceList)
+                self.lastPriceList = LastPriceTable().sortPrices(arrayToSort: self.lastPriceList)
                 //reloading the tableview
                 self.tableview.reloadData()
 
@@ -133,12 +133,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
             }
         })
-    
-    }
-    
-    func sortPrices(arrayToSort: [LastPrice])-> [LastPrice] {
-        
-        return arrayToSort.sorted(by: { $0.date?.compare($1.date!) == .orderedAscending })
     }
     
 }
