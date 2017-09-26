@@ -25,7 +25,7 @@
 
 import UIKit
 import Firebase
-import SwiftyJSON
+//import SwiftyJSON
 
 class LastPrice {
     var ticker: String?
