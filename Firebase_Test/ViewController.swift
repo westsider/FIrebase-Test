@@ -124,6 +124,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     self.lastPriceList.append(lastPrice)
                 }
                 
+                self.lastPriceList = self.sortPrices(arrayToSort: self.lastPriceList)
                 //reloading the tableview
                 self.tableview.reloadData()
 
@@ -135,28 +136,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     }
     
-    func sortPrices(arrayToSort: [LastPrice]) {
+    func sortPrices(arrayToSort: [LastPrice])-> [LastPrice] {
         
-        for items in arrayToSort {
-            let date = items.date
-        }
-        
-        let testArray = ["25 Jun, 2016", "30 Jun, 2016", "28 Jun, 2016", "2 Jul, 2016"]
-        var convertedArray: [Date] = []
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MM, yyyy"// yyyy-MM-dd"
-        
-        print("\nStarting Loop")
-        for dat in testArray {
-            let date = dateFormatter.date(from: dat)
-            convertedArray.append(date! as Date)
-        }
-        print("Converting Array")
-        let ready = convertedArray.sorted(by: { $0.compare($1) == .orderedDescending })
-        
-        print(ready)
-        
+        return arrayToSort.sorted(by: { $0.date?.compare($1.date!) == .orderedAscending })
     }
     
 }
