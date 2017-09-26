@@ -69,24 +69,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         authFirebase()
         fetchValuesFromFireBase()
         
-        //MARK: - TODO make tableview
+        //MARK: - TODO - Make a how to
         //MARK: - TODO - only load last file?
         //MARK: - TODO - sort by date
     }
     
- 
-    
-    let titleArray = ["AAPL", "GOOG", "MSFT", "SPY"]
-    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return titleArray.count
+        return lastPriceList.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
-        // for custom cell
-        //let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as!StockTableViewCell
-        cell.textLabel?.text = titleArray[indexPath.row]
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = lastPriceList[indexPath.row].date
+        let thisPrice = lastPriceList[indexPath.row].open!
+        let thisPrices = String(describing: thisPrice)
+        cell.detailTextLabel?.text = thisPrices
         
         return cell
     }
@@ -138,7 +136,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
                 
                 //reloading the tableview
-                //self.tableViewArtists.reloadData()
+                self.tableview.reloadData()
                 
                 for item in self.lastPriceList {
                     print(item.date!, item.open!, item.high!, item.low!, item.close!)
