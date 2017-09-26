@@ -25,29 +25,6 @@
 
 import UIKit
 import Firebase
-//import SwiftyJSON
-
-class LastPrice {
-    var ticker: String?
-    var date: String?
-    var open: Double?
-    var high: Double?
-    var low: Double?
-    var close: Double?
-    var volume: Double?
-    var signal: Double?
-    
-    init(ticker: String, date: String, open: Double, high:Double, low:Double, close:Double, volume:Double, signal:Double ) {
-        self.ticker = ticker
-        self.date = date
-        self.open = open
-        self.high = high
-        self.low = low
-        self.close = close
-        self.volume = volume
-        self.signal = signal
-    }
-}
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -68,7 +45,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         authFirebase()
         fetchValuesFromFireBase()
-        
+        //sortPrices()
         //MARK: - TODO - Make a how to
         //MARK: - TODO - only load last file?
         //MARK: - TODO - sort by date
@@ -81,8 +58,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = lastPriceList[indexPath.row].date
-        let thisPrice = lastPriceList[indexPath.row].open!
+        let theDate = lastPriceList[indexPath.row].date
+        // convert Date for to string
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy HH:mm:ss a"
+        let myStringafd = formatter.string(from: theDate!)
+        cell.textLabel?.text = myStringafd
+        
+        let thisPrice = lastPriceList[indexPath.row].close!
         let thisPrices = String(describing: thisPrice)
         cell.detailTextLabel?.text = thisPrices
         
@@ -120,16 +103,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     //getting values
                     let artistObject = artists.value as? [String: AnyObject]
                     
-                    let date    = artistObject?["date"] as! String
-                    
+                    // convert string to date
+                    let dateS    = artistObject?["date"] as! String  // 9/20/2017 1:00:00 PM
+                    print(dateS)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "MM/dd/yyyy hh:mm:ss a" // this converts it to zulu time
+                    let date:Date = dateFormatter.date(from: dateS)!    // when converted back to AM its correct to this time zome
+                    print(date)
+
                     let open    = (artistObject?["open"] as! NSString).doubleValue
- 
+
                     let high    = (artistObject?["high"] as! NSString).doubleValue
-                    
+
                     let low     = (artistObject?["low"] as! NSString).doubleValue
-                   
+
                     let close   = (artistObject?["close"] as! NSString).doubleValue
-                    
+
                     let lastPrice = LastPrice(ticker: "SPY", date: date, open: open, high: high, low: low, close: close, volume: 10000, signal: 0 )
                     //  appending it to list
                     self.lastPriceList.append(lastPrice)
@@ -137,13 +126,37 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 
                 //reloading the tableview
                 self.tableview.reloadData()
-                
+
                 for item in self.lastPriceList {
                     print(item.date!, item.open!, item.high!, item.low!, item.close!)
                 }
             }
         })
     
+    }
+    
+    func sortPrices(arrayToSort: [LastPrice]) {
+        
+        for items in arrayToSort {
+            let date = items.date
+        }
+        
+        let testArray = ["25 Jun, 2016", "30 Jun, 2016", "28 Jun, 2016", "2 Jul, 2016"]
+        var convertedArray: [Date] = []
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MM, yyyy"// yyyy-MM-dd"
+        
+        print("\nStarting Loop")
+        for dat in testArray {
+            let date = dateFormatter.date(from: dat)
+            convertedArray.append(date! as Date)
+        }
+        print("Converting Array")
+        let ready = convertedArray.sorted(by: { $0.compare($1) == .orderedDescending })
+        
+        print(ready)
+        
     }
     
 }
