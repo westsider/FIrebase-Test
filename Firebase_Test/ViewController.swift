@@ -47,7 +47,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         fetchValuesFromFireBase()
 
         //MARK: - TODO - Make a how to
-        //MARK: - TODO - only load last file?
+        //MARK: - TODO - push prices to Firebase and see how this loads
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -57,12 +57,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let stringDate = DateHelper().convertToStringFrom(date: lastPriceList[indexPath.row].date!)
-        cell.textLabel?.text = stringDate
-        
-        let thisPrice = lastPriceList[indexPath.row].close!
-        let thisPrices = String(describing: thisPrice)
-        cell.detailTextLabel?.text = thisPrices
+        cell.textLabel?.text = DateHelper().convertToStringFrom(date: lastPriceList[indexPath.row].date!)
+        cell.detailTextLabel?.text = String(describing: lastPriceList[indexPath.row].close!)
         
         return cell
     }
