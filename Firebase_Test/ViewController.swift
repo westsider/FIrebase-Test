@@ -57,12 +57,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let theDate = lastPriceList[indexPath.row].date
-        // convert Date for to string
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy HH:mm:ss a"
-        let myStringafd = formatter.string(from: theDate!)
-        cell.textLabel?.text = myStringafd
+        let stringDate = DateHelper().convertToStringFrom(date: lastPriceList[indexPath.row].date!)
+        cell.textLabel?.text = stringDate
         
         let thisPrice = lastPriceList[indexPath.row].close!
         let thisPrices = String(describing: thisPrice)

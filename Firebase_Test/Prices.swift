@@ -50,4 +50,14 @@ class DateHelper {
         //print(date)
         return date
     }
+    
+    func convertToStringFrom(date: Date)-> String {
+        
+        //let theDate = date
+        // convert Date for to string
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy HH:mm:ss a"
+        return formatter.string(from: date)
+        //cell.textLabel?.text = myStringafd
+    }
 }
