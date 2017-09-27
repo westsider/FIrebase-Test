@@ -38,3 +38,16 @@ class LastPriceTable {
         return arrayToSort.sorted(by: { $0.date?.compare($1.date!) == .orderedAscending })
     }
 }
+
+class DateHelper {
+    func convertToDateFrom(string: String)-> Date {
+        
+        let dateS    = string // 9/20/2017 1:00:00 PM
+        //print(dateS)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm:ss a" // this converts it to zulu time
+        let date:Date = dateFormatter.date(from: dateS)!    // when converted back to AM its correct to this time zome
+        //print(date)
+        return date
+    }
+}

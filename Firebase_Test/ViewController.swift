@@ -45,10 +45,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         authFirebase()
         fetchValuesFromFireBase()
-        //sortPrices()
+
         //MARK: - TODO - Make a how to
         //MARK: - TODO - only load last file?
-        //MARK: - TODO - sort by date
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -102,15 +101,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 for artists in snapshot.children.allObjects as! [DataSnapshot] {
                     //getting values
                     let artistObject = artists.value as? [String: AnyObject]
+               
+                    let date = DateHelper().convertToDateFrom(string: artistObject?["date"] as! String )
                     
-                    // convert string to date
-                    let dateS    = artistObject?["date"] as! String  // 9/20/2017 1:00:00 PM
-                    print(dateS)
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "MM/dd/yyyy hh:mm:ss a" // this converts it to zulu time
-                    let date:Date = dateFormatter.date(from: dateS)!    // when converted back to AM its correct to this time zome
-                    print(date)
-
                     let open    = (artistObject?["open"] as! NSString).doubleValue
 
                     let high    = (artistObject?["high"] as! NSString).doubleValue
@@ -128,9 +121,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 //reloading the tableview
                 self.tableview.reloadData()
 
-                for item in self.lastPriceList {
-                    print(item.date!, item.open!, item.high!, item.low!, item.close!)
-                }
+                //for item in self.lastPriceList {
+                //    print(item.date!, item.open!, item.high!, item.low!, item.close!)
+                //}
             }
         })
     }
