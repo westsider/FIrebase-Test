@@ -28,11 +28,13 @@ import Firebase
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var ref: DatabaseReference!
+//    var ref: DatabaseReference!
+//
+//    let currentChild = "-KupyHKs9UxNJiBn1iYO"
+//
+//    var userEmail = ""
     
-    let currentChild = "-KupyHKs9UxNJiBn1iYO"
-
-    var userEmail = ""
+    let firebaseLink = FirebaseLink()
  
     var lastPriceList = [LastPrice]()
     
@@ -43,7 +45,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        authFirebase()
+        firebaseLink.authFirebase()
         fetchValuesFromFireBase()
 
         //MARK: - TODO - Make a how to
@@ -55,34 +57,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = DateHelper().convertToStringFrom(date: lastPriceList[indexPath.row].date!)
         cell.detailTextLabel?.text = String(describing: lastPriceList[indexPath.row].close!)
-        
         return cell
     }
     
-    func authFirebase() {
-        
-        ref = Database.database().reference().child(currentChild).child("Table1")
-        let email = "whansen1@mac.com"
-        let password = "123456"
-        
-        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
-   
-            if error == nil {
-                self.userEmail = (user?.email!)!
-            } else {
-                print(error ?? "something went wrong getting error")
-            }
-        }
-    }
+//    func authFirebase() {
+//
+//        ref = Database.database().reference().child(currentChild).child("Table1")
+//        let email = "whansen1@mac.com"
+//        let password = "123456"
+//
+//        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+//
+//            if error == nil {
+//                self.userEmail = (user?.email!)!
+//            } else {
+//                print(error ?? "something went wrong getting error")
+//            }
+//        }
+//    }
 
     func fetchValuesFromFireBase() {
     
         //observing the data changes
-        ref.observe(DataEventType.value, with: { (snapshot) in
+        firebaseLink.ref.observe(DataEventType.value, with: { (snapshot) in
             
             //if the reference have some values
             if snapshot.childrenCount > 0 {
