@@ -47,18 +47,14 @@ class DateHelper {
         formatter.dateFormat = "MM/dd/yyyy hh:mm:ss a"
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         let date:Date = formatter.date(from: dateS)!
-        //print("date in func:  \(date)")
         return date
     }
     
     func convertToStringFrom(date: Date)-> String {
-        
-        //let theDate = date
-        // convert Date for to string
+
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy HH:mm"
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter.string(from: date)
-        //cell.textLabel?.text = myStringafd
     }
 }

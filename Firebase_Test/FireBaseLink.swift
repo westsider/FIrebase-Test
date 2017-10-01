@@ -14,8 +14,6 @@ class FirebaseLink {
     
     var ref: DatabaseReference!
     
-    //let currentChild = "-KupyHKs9UxNJiBn1iYO"
-    
     var userEmail = ""
     
     func authFirebase() {
@@ -34,15 +32,4 @@ class FirebaseLink {
             }
         }
     }
-    
-    func getQuery() -> DatabaseQuery {
-        // [START recent_posts_query]
-        // Last 100 posts, these are automatically the 100 most recent
-        // due to sorting by push() keys
-        let recentPostsQuery = (ref?.child("posts").queryLimited(toFirst: 2))!
-        // [END recent_posts_query]
-        return recentPostsQuery
-    }
-    
-
 }

@@ -5,23 +5,6 @@
 //  Created by Warren Hansen on 9/25/17.
 //  Copyright © 2017 Warren Hansen. All rights reserved.
 //
-    /*
-    firebase instructions
-    new ios project, NEW FIREBASE PROJECT + NEW ios project, download install plsit, 
-    pod ** copy current list **
-    app delegate import Firebase, Firebase.configure()
-    firebase / auth / add auth method / enable email/pass / add user/pass manually
- 
-    firebase Database rules
-     {
-     "rules": {
-     ".read": true,
-     ".write": "auth == null"
-     }
-     }}
-     }
- 
-    */
 
 import UIKit
 import Firebase
@@ -42,7 +25,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         firebaseLink.authFirebase()
         fetchValuesFromFireBase(debug: false)
   
-        //MARK: - TODO - Make a how to
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -66,7 +48,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
      
                 for items in snapshot.children.allObjects as! [DataSnapshot] {
                     
-                    //MARK: - TODO - Fix date format 00:00
                     // get all other values ticker ect
                     let data    = items.value as? [String: AnyObject]
                     let date    = DateHelper().convertToDateFrom(string: data?["date"] as! String )
@@ -95,19 +76,4 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
 
 
-/*
- <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
- <script>
- // Initialize Firebase
- var config = {
- apiKey: "AIzaSyCCHm4SuTobNHLB9k9xLHJSSUkxR9Js0hI",
- authDomain: "mtdash01.firebaseapp.com",
- databaseURL: "https://mtdash01.firebaseio.com",
- projectId: "mtdash01",
- storageBucket: "mtdash01.appspot.com",
- messagingSenderId: "634510800862"
- };
- firebase.initializeApp(config);
- </script>
- */
 
