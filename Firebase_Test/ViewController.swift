@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TablesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     let firebaseLink = FirebaseLink()
  
