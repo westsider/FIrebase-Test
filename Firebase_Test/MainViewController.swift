@@ -13,7 +13,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.title = "Server Status" 
+        self.navigationItem.title = "Trade Server" 
         // Do any additional setup after loading the view.
     }
 
