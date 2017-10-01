@@ -40,10 +40,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         
         firebaseLink.authFirebase()
-        fetchValuesFromFireBase()
-
+        fetchValuesFromFireBase(debug: false)
+  
         //MARK: - TODO - Make a how to
-        //MARK: - TODO - push prices to Firebase and see how this loads
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -57,7 +56,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
 
-    func fetchValuesFromFireBase() {
+    func fetchValuesFromFireBase(debug: Bool) {
     
         firebaseLink.ref.observe(DataEventType.value, with: { (snapshot) in
    
@@ -67,13 +66,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
      
                 for items in snapshot.children.allObjects as! [DataSnapshot] {
                     
+                    //MARK: - TODO - Fix date format 00:00
+                    // get all other values ticker ect
                     let data    = items.value as? [String: AnyObject]
                     let date    = DateHelper().convertToDateFrom(string: data?["date"] as! String )
-                    let open    = (data?["open"] as! NSString).doubleValue
-                    let high    = (data?["high"] as! NSString).doubleValue
-                    let low     = (data?["low"] as! NSString).doubleValue
-                    let close   = (data?["close"] as! NSString).doubleValue
-                    let lastPrice = LastPrice(ticker: "SPY", date: date, open: open,
+                    let open    = data?["open"] as! Double
+                    let high    = data?["high"] as! Double
+                    let low     = data?["low"] as! Double
+                    let close   = data?["close"] as! Double
+                    let lastPrice = LastPrice(ticker: "SPY", date: date, open: open ,
                                               high: high, low: low, close: close, volume: 10000, signal: 0 )
                     self.lastPriceList.append(lastPrice)
                 }
@@ -81,9 +82,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 self.lastPriceList = LastPriceTable().sortPrices(arrayToSort: self.lastPriceList)
                 self.tableview.reloadData()
 
-                //for item in self.lastPriceList {
-                //    print(item.date!, item.open!, item.high!, item.low!, item.close!)
-                //}
+                if(debug) {
+                    for item in self.lastPriceList {
+                        print(item.date!, item.open!, item.high!, item.low!, item.close!)
+                    }
+                }
+                
             }
         })
     }
