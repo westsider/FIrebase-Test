@@ -18,8 +18,11 @@ class LastPrice {
     var close: Double?
     var volume: Double?
     var signal: Double?
+    var trade: Double?
+    var bartype: String?
     
-    init(ticker: String, date: Date, open: Double, high:Double, low:Double, close:Double, volume:Double, signal:Double ) {
+    init(ticker: String, date: Date, open: Double, high:Double, low:Double,
+         close:Double, volume:Double, signal:Double, trade:Double, bartype:String ) {
         self.ticker = ticker
         self.date = date
         self.open = open
@@ -28,6 +31,8 @@ class LastPrice {
         self.close = close
         self.volume = volume
         self.signal = signal
+        self.trade = trade
+        self.bartype = bartype
     }
 }
 

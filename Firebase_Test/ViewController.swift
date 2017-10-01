@@ -50,13 +50,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     
                     // get all other values ticker ect
                     let data    = items.value as? [String: AnyObject]
+                    let ticker  = data?["ticker"] as! String
                     let date    = DateHelper().convertToDateFrom(string: data?["date"] as! String )
                     let open    = data?["open"] as! Double
                     let high    = data?["high"] as! Double
                     let low     = data?["low"] as! Double
                     let close   = data?["close"] as! Double
-                    let lastPrice = LastPrice(ticker: "SPY", date: date, open: open ,
-                                              high: high, low: low, close: close, volume: 10000, signal: 0 )
+                    
+                    let signal  = data?["signal"] as! Double
+                    let trade   = data?["trade"] as! Double
+                    let bartype = data?["bartype"] as! String
+                    
+                    let lastPrice = LastPrice(ticker: ticker, date: date, open: open ,
+                                              high: high, low: low, close: close, volume: 10000,
+                                              signal: signal, trade: trade, bartype: bartype )
                     self.lastPriceList.append(lastPrice)
                 }
                 
@@ -65,7 +72,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
                 if(debug) {
                     for item in self.lastPriceList {
-                        print(item.date!, item.open!, item.high!, item.low!, item.close!)
+                        print(item.date!, item.ticker!, item.open!, item.high!, item.low!, item.close!,
+                              item.signal!, item.signal!, item.trade!, item.bartype!)
                     }
                 }
                 
