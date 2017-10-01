@@ -84,58 +84,97 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="JAd-Sa-I8f" userLabel="Main Stack View">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aC7-NI-MNP" userLabel="Bottom Toolbar">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="772-uk-MNf"/>
+                                    <barButtonItem title="table" image="List" springLoaded="YES" style="plain" id="suz-e4-X0G">
+                                        <connections>
+                                            <segue destination="BYZ-38-t0r" kind="show" id="HaL-NC-C5y"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="4Sa-7R-R3r"/>
+                                    <barButtonItem title="chart" image="Chart_1" id="Oe0-pb-otk"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="bkb-ZV-yba"/>
+                                    <barButtonItem title="menu" image="Tasks" id="V1p-7P-WWE"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="fqt-hk-o3q"/>
+                                    <barButtonItem title="stats" image="Stats" id="2eU-vz-LDD"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="WiX-Uq-hui"/>
+                                </items>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </toolbar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JeE-nn-np9" userLabel="Main View">
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                                 <subviews>
-                                    <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r1w-kp-Iex">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                        <items>
-                                            <navigationItem title="Server Stats" id="4I7-KJ-TN4"/>
-                                        </items>
-                                    </navigationBar>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EOz-Y5-YPL" userLabel="Top View">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="93"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Circle" translatesAutoresizingMaskIntoConstraints="NO" id="bSG-wS-PMa">
-                                        <rect key="frame" x="0.0" y="137" width="375" height="257"/>
-                                    </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nQV-zv-02U" userLabel="Bottom View">
-                                        <rect key="frame" x="0.0" y="394" width="375" height="185"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aC7-NI-MNP" userLabel="Bottom Toolbar">
-                                        <rect key="frame" x="0.0" y="579" width="375" height="88"/>
-                                        <items>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="772-uk-MNf"/>
-                                            <barButtonItem title="table" image="List" springLoaded="YES" style="plain" id="suz-e4-X0G">
-                                                <connections>
-                                                    <segue destination="BYZ-38-t0r" kind="show" id="HaL-NC-C5y"/>
-                                                </connections>
-                                            </barButtonItem>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="4Sa-7R-R3r"/>
-                                            <barButtonItem title="chart" image="Chart_1" id="Oe0-pb-otk"/>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="bkb-ZV-yba"/>
-                                            <barButtonItem title="menu" image="Tasks" id="V1p-7P-WWE"/>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="fqt-hk-o3q"/>
-                                            <barButtonItem title="stats" image="Stats" id="2eU-vz-LDD"/>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="WiX-Uq-hui"/>
-                                        </items>
-                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    </toolbar>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="FkS-04-9NU">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sGb-cg-aur" userLabel="Top Section">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                                                <color key="backgroundColor" red="1" green="0.50196078430000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="128" id="YBQ-ye-kOb"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hdb-T7-aWs" userLabel="Mid Section">
+                                                <rect key="frame" x="0.0" y="128" width="375" height="266"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Circle" translatesAutoresizingMaskIntoConstraints="NO" id="7Th-jT-6bm">
+                                                        <rect key="frame" x="8" y="8" width="359" height="250"/>
+                                                    </imageView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstItem="7Th-jT-6bm" firstAttribute="leading" secondItem="Hdb-T7-aWs" secondAttribute="leading" constant="8" id="YPZ-Ju-1Ft"/>
+                                                    <constraint firstAttribute="bottom" secondItem="7Th-jT-6bm" secondAttribute="bottom" constant="8" id="gPt-vq-gxZ"/>
+                                                    <constraint firstAttribute="width" constant="375" id="gfp-Dv-fIz"/>
+                                                    <constraint firstItem="7Th-jT-6bm" firstAttribute="top" secondItem="Hdb-T7-aWs" secondAttribute="top" constant="8" id="qCC-V2-3cx"/>
+                                                    <constraint firstAttribute="trailing" secondItem="7Th-jT-6bm" secondAttribute="trailing" constant="8" id="rG1-w7-w6e"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HUw-KE-FJi" userLabel="Low Section">
+                                                <rect key="frame" x="0.0" y="394" width="375" height="165"/>
+                                                <color key="backgroundColor" red="0.52154112490000004" green="0.65439286890000004" blue="0.97105586529999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="165" id="EPL-SJ-aEw"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Hdb-T7-aWs" firstAttribute="leading" secondItem="FkS-04-9NU" secondAttribute="leading" id="D21-Um-SRv"/>
+                                            <constraint firstItem="HUw-KE-FJi" firstAttribute="top" secondItem="Hdb-T7-aWs" secondAttribute="bottom" id="GTP-NF-DV7"/>
+                                            <constraint firstItem="Hdb-T7-aWs" firstAttribute="top" secondItem="sGb-cg-aur" secondAttribute="bottom" id="Kuk-vb-A2X"/>
+                                            <constraint firstItem="HUw-KE-FJi" firstAttribute="leading" secondItem="FkS-04-9NU" secondAttribute="leading" id="ZbH-0T-HgS"/>
+                                            <constraint firstItem="HUw-KE-FJi" firstAttribute="top" secondItem="Hdb-T7-aWs" secondAttribute="bottom" id="c4j-qm-bnv"/>
+                                            <constraint firstItem="sGb-cg-aur" firstAttribute="top" secondItem="FkS-04-9NU" secondAttribute="top" id="cml-Bm-5hy"/>
+                                            <constraint firstAttribute="trailing" secondItem="HUw-KE-FJi" secondAttribute="trailing" id="iwq-g9-36y"/>
+                                            <constraint firstAttribute="trailing" secondItem="sGb-cg-aur" secondAttribute="trailing" id="nKe-20-01T"/>
+                                            <constraint firstAttribute="trailing" secondItem="Hdb-T7-aWs" secondAttribute="trailing" id="rOh-NA-t9s"/>
+                                            <constraint firstItem="Hdb-T7-aWs" firstAttribute="top" secondItem="sGb-cg-aur" secondAttribute="bottom" id="syx-km-B2G"/>
+                                            <constraint firstItem="sGb-cg-aur" firstAttribute="leading" secondItem="FkS-04-9NU" secondAttribute="leading" id="tmc-Sv-o6A"/>
+                                            <constraint firstAttribute="bottom" secondItem="HUw-KE-FJi" secondAttribute="bottom" id="zo1-ni-1j2"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
+                                <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="nQV-zv-02U" secondAttribute="bottom" constant="88" id="Uig-2a-RpW"/>
-                                    <constraint firstItem="bSG-wS-PMa" firstAttribute="top" secondItem="JAd-Sa-I8f" secondAttribute="top" constant="137" id="kRC-gT-wwG"/>
+                                    <constraint firstAttribute="bottom" secondItem="FkS-04-9NU" secondAttribute="bottom" id="Eg4-gi-bij"/>
+                                    <constraint firstItem="FkS-04-9NU" firstAttribute="top" secondItem="JeE-nn-np9" secondAttribute="top" id="HO9-wK-ctS"/>
+                                    <constraint firstItem="FkS-04-9NU" firstAttribute="leading" secondItem="JeE-nn-np9" secondAttribute="leading" id="Woa-yP-arc"/>
+                                    <constraint firstAttribute="trailing" secondItem="FkS-04-9NU" secondAttribute="trailing" id="cqt-TW-fxo"/>
                                 </constraints>
-                            </stackView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="JAd-Sa-I8f" firstAttribute="leading" secondItem="fXw-0B-dYF" secondAttribute="leading" id="3YI-dI-Bxo"/>
-                            <constraint firstItem="KXi-y3-RmS" firstAttribute="top" secondItem="JAd-Sa-I8f" secondAttribute="bottom" id="PDj-fd-rD4"/>
-                            <constraint firstAttribute="trailing" secondItem="JAd-Sa-I8f" secondAttribute="trailing" id="nIJ-ay-Mrc"/>
-                            <constraint firstItem="JAd-Sa-I8f" firstAttribute="top" secondItem="fXw-0B-dYF" secondAttribute="top" id="oVt-je-OrH"/>
+                            <constraint firstItem="aC7-NI-MNP" firstAttribute="top" secondItem="JeE-nn-np9" secondAttribute="bottom" id="4OE-hr-Ydl"/>
+                            <constraint firstAttribute="trailing" secondItem="aC7-NI-MNP" secondAttribute="trailing" id="HM0-9K-AP6"/>
+                            <constraint firstItem="JeE-nn-np9" firstAttribute="leading" secondItem="fXw-0B-dYF" secondAttribute="leading" id="MCU-b0-wGq"/>
+                            <constraint firstItem="aC7-NI-MNP" firstAttribute="leading" secondItem="fXw-0B-dYF" secondAttribute="leading" id="U4i-Ld-tgI"/>
+                            <constraint firstItem="JeE-nn-np9" firstAttribute="top" secondItem="Mhf-mm-4xc" secondAttribute="bottom" id="Wg2-6a-UfR"/>
+                            <constraint firstItem="aC7-NI-MNP" firstAttribute="top" secondItem="JeE-nn-np9" secondAttribute="bottom" id="cUd-JM-OW9"/>
+                            <constraint firstAttribute="trailing" secondItem="JeE-nn-np9" secondAttribute="trailing" id="dgq-97-gqs"/>
+                            <constraint firstItem="KXi-y3-RmS" firstAttribute="top" secondItem="aC7-NI-MNP" secondAttribute="bottom" id="w92-9P-yox"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="n2a-Cj-oRJ"/>
