@@ -146,11 +146,59 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pDA-sP-G2B">
                                                 <rect key="frame" x="8" y="8" width="167" height="119"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFv-5D-n8I">
+                                                        <rect key="frame" x="8" y="28" width="151" height="29"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VOS-7h-nDO">
+                                                        <rect key="frame" x="8" y="65" width="151" height="21"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="XFv-5D-n8I" secondAttribute="trailing" constant="8" id="3KB-eb-MdV"/>
+                                                    <constraint firstAttribute="trailing" secondItem="VOS-7h-nDO" secondAttribute="trailing" constant="8" id="C5i-HA-QdF"/>
+                                                    <constraint firstAttribute="bottom" secondItem="VOS-7h-nDO" secondAttribute="bottom" constant="33" id="Eki-Fe-7aN"/>
+                                                    <constraint firstItem="XFv-5D-n8I" firstAttribute="top" secondItem="pDA-sP-G2B" secondAttribute="top" constant="28" id="TUg-Bp-PcX"/>
+                                                    <constraint firstItem="VOS-7h-nDO" firstAttribute="top" secondItem="XFv-5D-n8I" secondAttribute="bottom" constant="8" id="bJg-KZ-7ou"/>
+                                                    <constraint firstItem="VOS-7h-nDO" firstAttribute="top" secondItem="XFv-5D-n8I" secondAttribute="bottom" constant="8" id="sgI-7O-gQz"/>
+                                                    <constraint firstItem="VOS-7h-nDO" firstAttribute="leading" secondItem="pDA-sP-G2B" secondAttribute="leading" constant="8" id="wvc-uc-Dyw"/>
+                                                    <constraint firstItem="XFv-5D-n8I" firstAttribute="leading" secondItem="pDA-sP-G2B" secondAttribute="leading" constant="8" id="wyn-ne-ya2"/>
+                                                </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0pV-Fy-HpG">
                                                 <rect key="frame" x="184" y="8" width="167" height="119"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:15 AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1F-Wu-Civ">
+                                                        <rect key="frame" x="8" y="28" width="151" height="29"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOM-Ak-R8e">
+                                                        <rect key="frame" x="8" y="65" width="151" height="21"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstItem="L1F-Wu-Civ" firstAttribute="top" secondItem="0pV-Fy-HpG" secondAttribute="top" constant="28" id="68m-dt-JgX"/>
+                                                    <constraint firstItem="L1F-Wu-Civ" firstAttribute="leading" secondItem="0pV-Fy-HpG" secondAttribute="leading" constant="8" id="Dlm-rA-cPJ"/>
+                                                    <constraint firstAttribute="bottom" secondItem="OOM-Ak-R8e" secondAttribute="bottom" constant="33" id="HFm-Tu-QYP"/>
+                                                    <constraint firstItem="OOM-Ak-R8e" firstAttribute="top" secondItem="L1F-Wu-Civ" secondAttribute="bottom" constant="8" id="KPq-2F-PMm"/>
+                                                    <constraint firstItem="OOM-Ak-R8e" firstAttribute="leading" secondItem="0pV-Fy-HpG" secondAttribute="leading" constant="8" id="MiI-bF-wE1"/>
+                                                    <constraint firstAttribute="trailing" secondItem="L1F-Wu-Civ" secondAttribute="trailing" constant="8" id="NnH-J3-05G"/>
+                                                    <constraint firstAttribute="trailing" secondItem="OOM-Ak-R8e" secondAttribute="trailing" constant="8" id="j9B-VG-2BB"/>
+                                                    <constraint firstItem="OOM-Ak-R8e" firstAttribute="top" secondItem="L1F-Wu-Civ" secondAttribute="bottom" constant="8" id="xnq-ho-CTX"/>
+                                                </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" red="0.52154112490000004" green="0.65439286890000004" blue="0.97105586529999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
