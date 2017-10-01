@@ -120,7 +120,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- .35" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gkb-Jn-rhz">
-                                                <rect key="frame" x="126" y="164" width="122" height="22"/>
+                                                <rect key="frame" x="119" y="164" width="122" height="22"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -131,7 +131,7 @@
                                             <constraint firstItem="W5b-Dd-YaK" firstAttribute="centerX" secondItem="yGJ-PP-yZ3" secondAttribute="centerX" id="0wo-Lg-fSa"/>
                                             <constraint firstAttribute="bottom" secondItem="gkb-Jn-rhz" secondAttribute="bottom" constant="77" id="5f7-mS-8Zf"/>
                                             <constraint firstItem="W5b-Dd-YaK" firstAttribute="centerY" secondItem="yGJ-PP-yZ3" secondAttribute="centerY" id="8wk-ug-mJg"/>
-                                            <constraint firstItem="gkb-Jn-rhz" firstAttribute="leading" secondItem="yGJ-PP-yZ3" secondAttribute="leading" constant="126" id="IeG-0L-uer"/>
+                                            <constraint firstItem="gkb-Jn-rhz" firstAttribute="leading" secondItem="yGJ-PP-yZ3" secondAttribute="leading" constant="119" id="IeG-0L-uer"/>
                                             <constraint firstItem="gkb-Jn-rhz" firstAttribute="top" secondItem="W5b-Dd-YaK" secondAttribute="bottom" constant="8" id="Leg-aY-Bbk"/>
                                             <constraint firstItem="gkb-Jn-rhz" firstAttribute="width" secondItem="W5b-Dd-YaK" secondAttribute="width" id="Q0y-iq-VwC"/>
                                             <constraint firstAttribute="bottom" secondItem="veO-he-hxh" secondAttribute="bottom" constant="8" id="ZIO-uq-DpS"/>
@@ -295,6 +295,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="n2a-Cj-oRJ"/>
+                    <connections>
+                        <outlet property="lastPriceLabel" destination="W5b-Dd-YaK" id="I5B-cC-fru"/>
+                        <outlet property="priceCurrentLabel" destination="VOS-7h-nDO" id="Bry-pd-lom"/>
+                        <outlet property="priceDifferenceLabel" destination="gkb-Jn-rhz" id="WBB-lf-lo3"/>
+                        <outlet property="serverConnectedLable" destination="OOM-Ak-R8e" id="qQW-3D-n2v"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7S5-tA-6Rp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

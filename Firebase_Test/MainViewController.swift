@@ -9,7 +9,15 @@
 import UIKit
 
 class MainViewController: UIViewController {
-
+    //MARK: - TODO parse connection status from NT
+    @IBOutlet weak var serverConnectedLable: UILabel!
+    //MARK: - TODO parse last prise from server
+    @IBOutlet weak var lastPriceLabel: UILabel!
+    //MARK: - TODO Clac last price difference
+    @IBOutlet weak var priceDifferenceLabel: UILabel!
+    //MARK: - TODO Clactime from last update to show current / late
+    @IBOutlet weak var priceCurrentLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -17,20 +25,5 @@ class MainViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
