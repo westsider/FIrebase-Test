@@ -107,7 +107,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JeE-nn-np9" userLabel="Main View">
                                 <rect key="frame" x="0.0" y="64" width="375" height="566"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yGJ-PP-yZ3">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yGJ-PP-yZ3" userLabel="Mid View">
                                         <rect key="frame" x="8" y="152" width="359" height="263"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Circle" translatesAutoresizingMaskIntoConstraints="NO" id="veO-he-hxh">
@@ -141,10 +141,10 @@
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gkb-Jn-rhz" secondAttribute="trailing" id="kTZ-Er-IQK"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="edO-K1-FNx">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="edO-K1-FNx" userLabel="Bottom View">
                                         <rect key="frame" x="8" y="423" width="359" height="135"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pDA-sP-G2B">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pDA-sP-G2B" userLabel="L BottomView">
                                                 <rect key="frame" x="8" y="8" width="167" height="119"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFv-5D-n8I">
@@ -172,7 +172,7 @@
                                                     <constraint firstItem="XFv-5D-n8I" firstAttribute="leading" secondItem="pDA-sP-G2B" secondAttribute="leading" constant="8" id="wyn-ne-ya2"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0pV-Fy-HpG">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0pV-Fy-HpG" userLabel="R Bottom View">
                                                 <rect key="frame" x="184" y="8" width="167" height="119"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:15 AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1F-Wu-Civ">
@@ -201,7 +201,6 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.52154112490000004" green="0.65439286890000004" blue="0.97105586529999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="0pV-Fy-HpG" secondAttribute="trailing" constant="8" id="0qf-kr-X9H"/>
                                             <constraint firstAttribute="bottom" secondItem="pDA-sP-G2B" secondAttribute="bottom" constant="8" id="14g-2T-jul"/>
@@ -251,12 +250,10 @@
                                             <constraint firstItem="pDA-sP-G2B" firstAttribute="top" secondItem="edO-K1-FNx" secondAttribute="top" constant="8" id="xX4-OA-XyC"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p0h-d8-xd4">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p0h-d8-xd4" userLabel="Top View">
                                         <rect key="frame" x="8" y="8" width="359" height="136"/>
-                                        <color key="backgroundColor" red="1" green="0.50196078430000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="yGJ-PP-yZ3" firstAttribute="leading" secondItem="JeE-nn-np9" secondAttribute="leading" constant="8" id="0eK-GR-qlM"/>
                                     <constraint firstAttribute="bottom" secondItem="yGJ-PP-yZ3" secondAttribute="bottom" constant="151" id="3VU-7d-fjs"/>
