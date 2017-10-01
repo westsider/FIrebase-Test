@@ -42,12 +42,12 @@ class LastPriceTable {
 class DateHelper {
     func convertToDateFrom(string: String)-> Date {
         
-        let dateS    = string // 9/20/2017 1:00:00 PM
-        //print(dateS)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss a" // this converts it to zulu time
-        let date:Date = dateFormatter.date(from: dateS)!    // when converted back to AM its correct to this time zome
-        //print(date)
+        let dateS    = string
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy hh:mm:ss a"
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        let date:Date = formatter.date(from: dateS)!
+        //print("date in func:  \(date)")
         return date
     }
     
@@ -56,7 +56,8 @@ class DateHelper {
         //let theDate = date
         // convert Date for to string
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy HH:mm:ss a"
+        formatter.dateFormat = "MM/dd/yyyy HH:mm"
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter.string(from: date)
         //cell.textLabel?.text = myStringafd
     }
