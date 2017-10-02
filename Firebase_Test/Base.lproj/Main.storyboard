@@ -297,8 +297,10 @@
                     <navigationItem key="navigationItem" id="n2a-Cj-oRJ"/>
                     <connections>
                         <outlet property="lastPriceLabel" destination="W5b-Dd-YaK" id="I5B-cC-fru"/>
+                        <outlet property="lastUpdateTime" destination="XFv-5D-n8I" id="h3I-F1-TBb"/>
                         <outlet property="priceCurrentLabel" destination="VOS-7h-nDO" id="Bry-pd-lom"/>
                         <outlet property="priceDifferenceLabel" destination="gkb-Jn-rhz" id="WBB-lf-lo3"/>
+                        <outlet property="serverConnectTime" destination="L1F-Wu-Civ" id="3sa-97-Pv4"/>
                         <outlet property="serverConnectedLable" destination="OOM-Ak-R8e" id="qQW-3D-n2v"/>
                     </connections>
                 </viewController>

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TableViewController.swift
 //  Firebase_Test
 //
 //  Created by Warren Hansen on 9/25/17.
@@ -61,9 +61,13 @@ class TablesViewController: UIViewController, UITableViewDataSource, UITableView
                     let trade   = data?["trade"] as! Double
                     let bartype = data?["bartype"] as! String
                     
+                    let connectStatus = data?["connectStatus"] as! String
+                    let connectTime = data?["connectTime"] as! String
+                    
                     let lastPrice = LastPrice(ticker: ticker, date: date, open: open ,
                                               high: high, low: low, close: close, volume: 10000,
-                                              signal: signal, trade: trade, bartype: bartype )
+                                              signal: signal, trade: trade, bartype: bartype,
+                                              connectStatus: connectStatus, connectTime: connectTime )
                     self.lastPriceList.append(lastPrice)
                 }
                 

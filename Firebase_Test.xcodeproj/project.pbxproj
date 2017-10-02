@@ -12,7 +12,7 @@
 		0D61F1841F795B53009B12D2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D61F1831F795B53009B12D2 /* GoogleService-Info.plist */; };
 		0D7376751F8171A1003C8587 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7376741F8171A1003C8587 /* MainViewController.swift */; };
 		0D8D5A0A1F79585500628767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8D5A091F79585500628767 /* AppDelegate.swift */; };
-		0D8D5A0C1F79585500628767 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8D5A0B1F79585500628767 /* ViewController.swift */; };
+		0D8D5A0C1F79585500628767 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8D5A0B1F79585500628767 /* TableViewController.swift */; };
 		0D8D5A0F1F79585500628767 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8D5A0D1F79585500628767 /* Main.storyboard */; };
 		0D8D5A111F79585500628767 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D8D5A101F79585500628767 /* Assets.xcassets */; };
 		0D8D5A141F79585500628767 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8D5A121F79585500628767 /* LaunchScreen.storyboard */; };
@@ -26,7 +26,7 @@
 		0D7376741F8171A1003C8587 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		0D8D5A061F79585500628767 /* Firebase_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Firebase_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D8D5A091F79585500628767 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0D8D5A0B1F79585500628767 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0D8D5A0B1F79585500628767 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		0D8D5A0E1F79585500628767 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0D8D5A101F79585500628767 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D8D5A131F79585500628767 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -71,7 +71,7 @@
 			children = (
 				0D8D5A0D1F79585500628767 /* Main.storyboard */,
 				0D7376741F8171A1003C8587 /* MainViewController.swift */,
-				0D8D5A0B1F79585500628767 /* ViewController.swift */,
+				0D8D5A0B1F79585500628767 /* TableViewController.swift */,
 				0D0DFF7F1F7B061C00D24B88 /* Prices.swift */,
 				0D0DFF811F7B24DD00D24B88 /* FireBaseLink.swift */,
 				0D8D5A101F79585500628767 /* Assets.xcassets */,
@@ -227,7 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D0DFF821F7B24DD00D24B88 /* FireBaseLink.swift in Sources */,
-				0D8D5A0C1F79585500628767 /* ViewController.swift in Sources */,
+				0D8D5A0C1F79585500628767 /* TableViewController.swift in Sources */,
 				0D8D5A0A1F79585500628767 /* AppDelegate.swift in Sources */,
 				0D0DFF801F7B061C00D24B88 /* Prices.swift in Sources */,
 				0D7376751F8171A1003C8587 /* MainViewController.swift in Sources */,
