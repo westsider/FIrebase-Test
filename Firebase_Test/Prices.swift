@@ -49,22 +49,4 @@ class LastPriceTable {
     }
 }
 
-class DateHelper {
-    func convertToDateFrom(string: String)-> Date {
-        
-        let dateS    = string
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy hh:mm:ss a"
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        let date:Date = formatter.date(from: dateS)!
-        return date
-    }
-    
-    func convertToStringFrom(date: Date)-> String {
 
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy HH:mm"
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        return formatter.string(from: date)
-    }
-}

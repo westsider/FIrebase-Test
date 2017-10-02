@@ -10,20 +10,20 @@ import UIKit
 import Firebase
 
 class MainViewController: UIViewController {
-    //MARK: - TODO parse connection status from NT
+    
     @IBOutlet weak var serverConnectedLable: UILabel!
-    //MARK: - TODO parse last price from server
+    
     @IBOutlet weak var lastPriceLabel: UILabel!
-    //MARK: - TODO Clac last price difference
+    
     @IBOutlet weak var priceDifferenceLabel: UILabel!
-    //MARK: - TODO Clactime from last update to show current / late
+    
     @IBOutlet weak var priceCurrentLabel: UILabel!
-    // last updated time
+    
     @IBOutlet weak var lastUpdateTime: UILabel!
     
     @IBOutlet weak var serverConnectTime: UILabel!
     
-    
+
     let firebaseLink = FirebaseLink()
     
     var lastPriceList = [LastPrice]()

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0D0DFF801F7B061C00D24B88 /* Prices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0DFF7F1F7B061C00D24B88 /* Prices.swift */; };
 		0D0DFF821F7B24DD00D24B88 /* FireBaseLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0DFF811F7B24DD00D24B88 /* FireBaseLink.swift */; };
+		0D38A17F1F82C5DB00451D02 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D38A17E1F82C5DB00451D02 /* Dates.swift */; };
 		0D61F1841F795B53009B12D2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D61F1831F795B53009B12D2 /* GoogleService-Info.plist */; };
 		0D7376751F8171A1003C8587 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7376741F8171A1003C8587 /* MainViewController.swift */; };
 		0D8D5A0A1F79585500628767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8D5A091F79585500628767 /* AppDelegate.swift */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		0D0DFF7F1F7B061C00D24B88 /* Prices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prices.swift; sourceTree = "<group>"; };
 		0D0DFF811F7B24DD00D24B88 /* FireBaseLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseLink.swift; sourceTree = "<group>"; };
+		0D38A17E1F82C5DB00451D02 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
 		0D61F1831F795B53009B12D2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0D7376741F8171A1003C8587 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		0D8D5A061F79585500628767 /* Firebase_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Firebase_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +75,7 @@
 				0D7376741F8171A1003C8587 /* MainViewController.swift */,
 				0D8D5A0B1F79585500628767 /* TableViewController.swift */,
 				0D0DFF7F1F7B061C00D24B88 /* Prices.swift */,
+				0D38A17E1F82C5DB00451D02 /* Dates.swift */,
 				0D0DFF811F7B24DD00D24B88 /* FireBaseLink.swift */,
 				0D8D5A101F79585500628767 /* Assets.xcassets */,
 				0D8D5A091F79585500628767 /* AppDelegate.swift */,
@@ -229,6 +232,7 @@
 				0D0DFF821F7B24DD00D24B88 /* FireBaseLink.swift in Sources */,
 				0D8D5A0C1F79585500628767 /* TableViewController.swift in Sources */,
 				0D8D5A0A1F79585500628767 /* AppDelegate.swift in Sources */,
+				0D38A17F1F82C5DB00451D02 /* Dates.swift in Sources */,
 				0D0DFF801F7B061C00D24B88 /* Prices.swift in Sources */,
 				0D7376751F8171A1003C8587 /* MainViewController.swift in Sources */,
 			);
