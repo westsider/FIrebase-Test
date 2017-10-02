@@ -27,13 +27,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             } else {
                 UNUserNotificationCenter.current().delegate = self
                 Messaging.messaging().delegate = self
+                
                 DispatchQueue.main.async {
                     application.registerForRemoteNotifications()
                 }
          
             }
         }
+        
         FirebaseApp.configure()
+        
         return true
     }
 
@@ -64,6 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
         let newToken = InstanceID.instanceID().token()
         connectToFCM()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        //completionHandler(.alert)
+        UIApplication.shared.applicationIconBadgeNumber += 1
     }
 }
 
