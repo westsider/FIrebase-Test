@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
                 
                 DispatchQueue.main.async {
                     application.registerForRemoteNotifications()
+                    let newToken = InstanceID.instanceID().token()
+                    print("\nToken: \(newToken!)\n")
                 }
          
             }
@@ -66,6 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
 
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
         let newToken = InstanceID.instanceID().token()
+        print("\nToken: \(newToken)\n")
         connectToFCM()
     }
     
