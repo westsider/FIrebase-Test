@@ -27,4 +27,29 @@ class DateHelper {
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter.string(from: date)
     }
+    
+    func calcTimeFromLastUpdate(lastTime: Date)-> (String, String) {
+        let date = Date()
+        let calendar = Calendar.current
+        let hourNow = calendar.component(.hour, from: date)
+        let minuteNow = calendar.component(.minute, from: date)
+        // time from trade server
+        let timeString = String(describing: lastTime)
+        let timeArray = timeString.components(separatedBy: " ")
+        
+        let mid = timeArray[1]
+        let endIndex = mid.index(mid.endIndex, offsetBy: -3)
+        let truncated = mid.substring(to: endIndex)
+        
+        let arr = truncated.components(separatedBy: ":")
+        let stampHour = Int(arr[0])
+        let stampMin = Int(arr[1])
+        
+        let hoursElapsed = hourNow - stampHour!
+        let minsElapsed = minuteNow - stampMin!
+        //print("elapsed: \(hoursElapsed):\(minsElapsed)")
+        let timefromLast = ("\(hoursElapsed):\(minsElapsed)")
+        let lastUpdate = String(describing: stampHour!)+":"+String(describing: stampMin!)
+        return (timefromLast, lastUpdate)
+    }
 }

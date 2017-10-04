@@ -67,7 +67,6 @@ class MainViewController: UIViewController {
                 if (priceDiff >= 0) {
                     priceDifferenceLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
                 }
-                
                 priceDifferenceLabel.text = String(format:"%.2f", priceDiff)
             } else {
                 priceDifferenceLabel.text = "loading"
@@ -75,40 +74,15 @@ class MainViewController: UIViewController {
         }
         
         if let lastTime = lastUpdate?.date {
-            // current time
-            let date = Date()
-            let calendar = Calendar.current
-            let hourNow = calendar.component(.hour, from: date)
-            let minuteNow = calendar.component(.minute, from: date)
-            //print("\(hourNow) : \(minuteNow)")
-            // time from trade server
-            let timeString = String(describing: lastTime)
-            //print(lastTime)
-            let timeArray = timeString.components(separatedBy: " ")
-            
-            let mid = timeArray[1]
-            //print(mid)
-            let endIndex = mid.index(mid.endIndex, offsetBy: -3)
-            let truncated = mid.substring(to: endIndex)
-            
-            //print("trun: \(truncated)")
-            let arr = truncated.components(separatedBy: ":")
-            let stampHour = Int(arr[0])
-            let stampMin = Int(arr[1])
-            //print("Int: \(String(describing: stampHour)) \(String(describing: stampMin))")
-            lastUpdateTime.text = String(describing: stampHour!)+":"+String(describing: stampMin!)
-            
-            let hoursElapsed = hourNow - stampHour!
-            let minsElapsed = minuteNow - stampMin!
-            //print("elapsed: \(hoursElapsed):\(minsElapsed)")
-            priceCurrentLabel.text = ("\(hoursElapsed):\(minsElapsed)")
+            let convertedDate = DateHelper().calcTimeFromLastUpdate(lastTime: lastTime)
+            priceCurrentLabel.text = convertedDate.0
+            lastUpdateTime.text = convertedDate.1
         }
         
         if let serverDateTime = lastUpdate?.connectTime {
             let timeOnly = serverDateTime.components(separatedBy: " ")
             serverConnectTime?.text = timeOnly[1]
         }
-        
     }
 
     func fetchValuesFromFireBase(debug: Bool) {
