@@ -18,14 +18,27 @@ class LastPrice {
     var close: Double?
     var volume: Double?
     var signal: Double?
-    var trade: Double?
+    var trade: Double?  // this is -1 +1 -2+2
     var bartype: String?
     var connectStatus: String?
     var connectTime: String?
     
+    var longEntryPrice: Double?
+    var shortEntryPrice: Double?
+    
+    var longLineLength: Int?
+    var shortLineLength: Int?
+    var currentBar: Int?
+    
+    var inLong: Bool?
+    var inShort: Bool?
+    
+    //var barTime:Date?
+    
     init(ticker: String, date: Date, open: Double, high:Double, low:Double,
          close:Double, volume:Double, signal:Double, trade:Double, bartype:String,
-         connectStatus:String, connectTime:String) {
+         connectStatus:String, connectTime:String, longEntryPrice:Double,
+         shortEntryPrice:Double, longLineLength:Int, shortLineLength:Int, currentBar:Int, inLong:Bool, inShort:Bool) {
         self.ticker = ticker
         self.date = date
         self.open = open
@@ -38,6 +51,14 @@ class LastPrice {
         self.bartype = bartype
         self.connectStatus = connectStatus
         self.connectTime = connectTime
+        self.longEntryPrice = longEntryPrice
+        self.shortEntryPrice = shortEntryPrice
+        self.longLineLength = longLineLength
+        self.shortLineLength = shortLineLength
+        self.currentBar = currentBar
+        self.inLong = inLong
+        self.inShort = inShort
+        //self.barTime = barTime
     }
 }
 

@@ -50,6 +50,7 @@ class TablesViewController: UIViewController, UITableViewDataSource, UITableView
                     
                     // get all other values ticker ect
                     let data    = items.value as? [String: AnyObject]
+                    
                     let ticker  = data?["ticker"] as! String
                     let date    = DateHelper().convertToDateFrom(string: data?["date"] as! String )
                     let open    = data?["open"] as! Double
@@ -64,10 +65,23 @@ class TablesViewController: UIViewController, UITableViewDataSource, UITableView
                     let connectStatus = data?["connectStatus"] as! String
                     let connectTime = data?["connectTime"] as! String
                     
+                    let longEntryPrice = data?["longEntryPrice"] as! Double
+                    let shortEntryPrice = data?["shortEntryPrice"] as! Double
+                    
+                    let longLineLength = data?["longLineLength"] as! Int
+                    let shortLineLength = data?["shortLineLength"] as! Int
+                    let currentBar = data?["currentBar"] as! Int
+                    
+                    let inLong = data?["inLong"] as! Bool
+                    let inShort = data?["inShort"] as! Bool
+                    
+                    //let barTime = data?["barTime"] as! Date
+                    
+                    
                     let lastPrice = LastPrice(ticker: ticker, date: date, open: open ,
                                               high: high, low: low, close: close, volume: 10000,
                                               signal: signal, trade: trade, bartype: bartype,
-                                              connectStatus: connectStatus, connectTime: connectTime )
+                                              connectStatus: connectStatus, connectTime: connectTime, longEntryPrice: longEntryPrice, shortEntryPrice: shortEntryPrice, longLineLength: longLineLength, shortLineLength: shortLineLength, currentBar: currentBar, inLong: inLong, inShort: inShort )
                     self.lastPriceList.append(lastPrice)
                 }
                 

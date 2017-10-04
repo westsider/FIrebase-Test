@@ -23,12 +23,19 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var serverConnectTime: UILabel!
     
-
+    @IBOutlet weak var lastPriceTop: UILabel!
+    
     let firebaseLink = FirebaseLink()
     
     var lastPriceList = [LastPrice]()
     
     var json:[String:AnyObject]?
+    
+    var counter = 0;
+    
+    var currentLongEntryPrice:Double?
+    
+    var currentShortEntryPrice:Double?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,13 +43,46 @@ class MainViewController: UIViewController {
         self.navigationItem.title = "Trade Server"
         firebaseLink.authFirebase()
         fetchValuesFromFireBase(debug: false)
-        updateUI()
     }
     
     func updateUI() {
+        
         let lastUpdate = lastPriceList.last
         
         var thisClose = 00.00
+        
+        print("inLong: \(String(describing: lastUpdate?.inLong)) inShort: \(String(describing: lastUpdate?.inLong)) ")
+
+        if let inLong = lastUpdate?.inLong, let inShort = lastUpdate?.inShort, let longE:Double = currentLongEntryPrice, let shortE:Double = currentShortEntryPrice, let close = lastUpdate?.close {
+
+            var lastPriceUpdateTop:String?
+            
+            lastPriceTop.textColor = #colorLiteral(red: 0.6642242074, green: 0.6642400622, blue: 0.6642315388, alpha: 1)
+            
+            if (inLong) {
+                // clac Long Profit
+                let longProfit = close - longE
+                lastPriceUpdateTop = "Long \(String(describing: longE)) \(String(format: "%.2f", longProfit))"
+                if (longProfit < 0) {
+                    lastPriceTop.textColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+                }
+            } else if (inShort) {
+                // clac short Profit
+                let shortProfit =   shortE - close
+                //let shortP = String(format: "%.2f", shortProfit)
+                lastPriceUpdateTop = "Short \(String(describing: shortE)) \(String(format: "%.2f", shortProfit))"
+                if (shortProfit < 0){
+                    lastPriceTop.textColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+                }
+            } else {
+                lastPriceUpdateTop = "System Is Flat"
+                lastPriceTop.textColor = #colorLiteral(red: 0.7540688515, green: 0.7540867925, blue: 0.7540771365, alpha: 1)
+            }
+            
+            lastPriceTop?.text = lastPriceUpdateTop!
+        } else {
+            print("parse inTade failed")
+        }
         
         if let connectStat = lastUpdate?.connectStatus {
             serverConnectedLable.text = connectStat
@@ -97,6 +137,7 @@ class MainViewController: UIViewController {
                     
                     // get all other values ticker ect
                     let data    = items.value as? [String: AnyObject]
+                    
                     let ticker  = data?["ticker"] as! String
                     let date    = DateHelper().convertToDateFrom(string: data?["date"] as! String )
                     let open    = data?["open"] as! Double
@@ -105,30 +146,51 @@ class MainViewController: UIViewController {
                     let close   = data?["close"] as! Double
                     
                     let signal  = data?["signal"] as! Double
+                    
                     let trade   = data?["trade"] as! Double
                     let bartype = data?["bartype"] as! String
                     
                     let connectStatus = data?["connectStatus"] as! String
                     let connectTime = data?["connectTime"] as! String
                     
+                    let longEntryPrice = data?["longEntryPrice"] as! Double
+                    let shortEntryPrice = data?["shortEntryPrice"] as! Double
+                    
+                    if (trade == 1) {
+                        print("Long Entry")
+                        self.currentLongEntryPrice = longEntryPrice
+                    }
+                    if (trade == -1) {
+                         print("Short Entry")
+                        self.currentShortEntryPrice = shortEntryPrice
+                    }
+                    
+                    let longLineLength = data?["longLineLength"] as! Int
+                    let shortLineLength = data?["shortLineLength"] as! Int
+                    let currentBar = data?["currentBar"] as! Int
+                    
+                    let inLong = data?["inLong"] as! Bool  // = (boolValue as! CFBoolean) as Bool
+                    let inShort = data?["inShort"] as! Bool
+
                     let lastPrice = LastPrice(ticker: ticker, date: date, open: open ,
                                               high: high, low: low, close: close, volume: 10000,
                                               signal: signal, trade: trade, bartype: bartype,
-                                              connectStatus: connectStatus, connectTime: connectTime )
+                                              connectStatus: connectStatus, connectTime: connectTime,
+                                              longEntryPrice: longEntryPrice, shortEntryPrice: shortEntryPrice,
+                                              longLineLength: longLineLength, shortLineLength: shortLineLength,
+                                              currentBar: currentBar, inLong: inLong, inShort: inShort)
                     self.lastPriceList.append(lastPrice)
                 }
-                
-                self.lastPriceList = LastPriceTable().sortPrices(arrayToSort: self.lastPriceList)
-                //self.tableview.reloadData()
-                self.updateUI()
-                
+      
                 if(debug) {
                     for item in self.lastPriceList {
                         print(item.date!, item.ticker!, item.open!, item.high!, item.low!, item.close!,
-                              item.signal!, item.signal!, item.trade!, item.bartype!)
+                              item.signal!, item.trade!, item.bartype!, item.connectStatus!, item.connectTime!, item.longEntryPrice!, item.shortEntryPrice!, item.longLineLength!, item.shortLineLength!, item.currentBar!, item.inLong!, item.inShort!)
+                        self.counter = self.counter + 1
                     }
                 }
                 
+                self.updateUI()
             }
         })
     }

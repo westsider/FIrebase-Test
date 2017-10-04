@@ -297,6 +297,7 @@
                     <navigationItem key="navigationItem" id="n2a-Cj-oRJ"/>
                     <connections>
                         <outlet property="lastPriceLabel" destination="W5b-Dd-YaK" id="I5B-cC-fru"/>
+                        <outlet property="lastPriceTop" destination="DK2-rf-Tmj" id="gqf-aD-YA0"/>
                         <outlet property="lastUpdateTime" destination="XFv-5D-n8I" id="h3I-F1-TBb"/>
                         <outlet property="priceCurrentLabel" destination="VOS-7h-nDO" id="Bry-pd-lom"/>
                         <outlet property="priceDifferenceLabel" destination="gkb-Jn-rhz" id="WBB-lf-lo3"/>
