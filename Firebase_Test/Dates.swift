@@ -42,14 +42,15 @@ class DateHelper {
         let truncated = mid.substring(to: endIndex)
         
         let arr = truncated.components(separatedBy: ":")
-        let stampHour = Int(arr[0])
+        var stampHour = Int(arr[0])
+        stampHour = stampHour! - 3 // adj for EST
         let stampMin = Int(arr[1])
         
         let hoursElapsed = hourNow - stampHour!
         let minsElapsed = minuteNow - stampMin!
         //print("elapsed: \(hoursElapsed):\(minsElapsed)")
         let timefromLast = ("\(hoursElapsed):\(minsElapsed)")
-        let lastUpdate = String(describing: stampHour!)+":"+String(describing: stampMin!)
+        let lastUpdate = String(describing: stampHour!)+":"+String(describing: stampMin!) + "0"
         return (timefromLast, lastUpdate)
     }
 }

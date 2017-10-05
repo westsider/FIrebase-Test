@@ -121,7 +121,11 @@ class MainViewController: UIViewController {
         
         if let serverDateTime = lastUpdate?.connectTime {
             let timeOnly = serverDateTime.components(separatedBy: " ")
-            serverConnectTime?.text = timeOnly[1]
+            let arr = timeOnly[1].components(separatedBy: ":")
+            var hour = Int(arr[0])
+            hour = hour! - 3 // adj for EST
+            let min = arr[1]
+            serverConnectTime?.text = "\(hour!)" + ":" + min
         }
     }
 

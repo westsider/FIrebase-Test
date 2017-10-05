@@ -9,7 +9,18 @@
 import Foundation
 import UIKit
 
+/**
+ - Author: Warren Hansen
+ 
+This class will hold price data for every bar on the chart
+ 
+ ### Declare As:
+     let firebaseLink = FirebaseLink()
+ ### Use Like
+     
+ */
 class LastPrice {
+    
     var ticker: String?
     var date: Date?
     var open: Double?
@@ -18,7 +29,7 @@ class LastPrice {
     var close: Double?
     var volume: Double?
     var signal: Double?
-    var trade: Double?  // this is -1 +1 -2+2
+    var trade: Double?
     var bartype: String?
     var connectStatus: String?
     var connectTime: String?
@@ -31,8 +42,9 @@ class LastPrice {
     var currentBar: Int?
     
     var inLong: Bool?
-    var inShort: Bool?
+    var inShort: Bool?  // make these no optional
     
+    //MARK: - TODO add NSDATE from server
     //var barTime:Date?
     
     init(ticker: String, date: Date, open: Double, high:Double, low:Double,
