@@ -85,7 +85,7 @@ class TablesViewController: UIViewController, UITableViewDataSource, UITableView
                     self.lastPriceList.append(lastPrice)
                 }
                 
-                self.lastPriceList = LastPriceTable().sortPrices(arrayToSort: self.lastPriceList)
+               // self.lastPriceList = LastPriceTable().sortPrices(arrayToSort: self.lastPriceList)
                 self.tableview.reloadData()
 
                 if(debug) {

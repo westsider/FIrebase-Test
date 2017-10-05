@@ -51,7 +51,7 @@ class MainViewController: UIViewController {
         
         var thisClose = 00.00
         
-        print("inLong: \(String(describing: lastUpdate?.inLong)) inShort: \(String(describing: lastUpdate?.inLong)) ")
+        //print("inLong: \(String(describing: lastUpdate?.inLong)) inShort: \(String(describing: lastUpdate?.inLong)) ")
 
         if let inLong = lastUpdate?.inLong, let inShort = lastUpdate?.inShort, let longE:Double = currentLongEntryPrice, let shortE:Double = currentShortEntryPrice, let close = lastUpdate?.close {
 
@@ -161,11 +161,11 @@ class MainViewController: UIViewController {
                     let shortEntryPrice = data?["shortEntryPrice"] as! Double
                     
                     if (trade == 1) {
-                        print("Long Entry")
+                        //print("Long Entry")
                         self.currentLongEntryPrice = longEntryPrice
                     }
                     if (trade == -1) {
-                         print("Short Entry")
+                        // print("Short Entry")
                         self.currentShortEntryPrice = shortEntryPrice
                     }
                     

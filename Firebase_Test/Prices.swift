@@ -72,14 +72,13 @@ class LastPrice {
         self.inShort = inShort
         //self.barTime = barTime
     }
-}
-
-class LastPriceTable {
     
     func sortPrices(arrayToSort: [LastPrice])-> [LastPrice] {
         
         return arrayToSort.sorted(by: { $0.date?.compare($1.date!) == .orderedAscending })
     }
 }
+
+
 
 
