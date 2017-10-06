@@ -35,7 +35,7 @@ class MainViewController: UIViewController {
 
         self.navigationItem.title = "Trade Server"
         firebaseLink.authFirebase()
-        firebaseLink.fetchData(debug: false) { ( urlCallDone ) in
+        firebaseLink.fetchData(debug: true) { ( urlCallDone ) in
             if urlCallDone {
                 print("firebase has updated the Prices Object")
                 self.updateUISegmented()
@@ -44,12 +44,16 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func toobarTableViewAction(_ sender: Any) {
-
         let myVC = storyboard?.instantiateViewController(withIdentifier: "tableVC") as! TablesViewController
         myVC.lastPriceList = firebaseLink.lastPriceList
         navigationController?.pushViewController(myVC, animated: true)
     }
     
+    @IBAction func chartAction(_ sender: Any) {
+        let myVC = storyboard?.instantiateViewController(withIdentifier: "chartVC") as! ChartViewController
+        myVC.lastPriceList = firebaseLink.lastPriceList
+        navigationController?.pushViewController(myVC, animated: true)
+    }
     
     func updateUISegmented() {
         let lastUpdate = firebaseLink.lastPriceList.last
