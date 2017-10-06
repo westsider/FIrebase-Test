@@ -11,6 +11,7 @@
 		0D0DFF821F7B24DD00D24B88 /* FireBaseLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0DFF811F7B24DD00D24B88 /* FireBaseLink.swift */; };
 		0D38A17F1F82C5DB00451D02 /* Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D38A17E1F82C5DB00451D02 /* Dates.swift */; };
 		0D38A1851F82EA3B00451D02 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D38A1841F82EA3B00451D02 /* GoogleService-Info.plist */; };
+		0D3992FB1F87DA2D003962D1 /* SCIGenericWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3992FA1F87DA2D003962D1 /* SCIGenericWrapper.swift */; };
 		0D51113F1F8710AB006660F1 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D51113E1F8710AB006660F1 /* ChartViewController.swift */; };
 		0D7376751F8171A1003C8587 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7376741F8171A1003C8587 /* MainViewController.swift */; };
 		0D8D5A0A1F79585500628767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8D5A091F79585500628767 /* AppDelegate.swift */; };
@@ -27,6 +28,7 @@
 		0D38A17E1F82C5DB00451D02 /* Dates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dates.swift; sourceTree = "<group>"; };
 		0D38A1801F82E06000451D02 /* Firebase_Test.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Firebase_Test.entitlements; sourceTree = "<group>"; };
 		0D38A1841F82EA3B00451D02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0D3992FA1F87DA2D003962D1 /* SCIGenericWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SCIGenericWrapper.swift; path = Firebase_Test/SciChart_iOS_v2.0.0.1640_SDK/SciChart.framework/SwiftUtil/SCIGenericWrapper.swift; sourceTree = "<group>"; };
 		0D51113E1F8710AB006660F1 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChartViewController.swift; path = Controller/ChartViewController.swift; sourceTree = "<group>"; };
 		0D7376741F8171A1003C8587 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		0D8D5A061F79585500628767 /* Firebase_Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Firebase_Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +69,7 @@
 		0D8D59FD1F79585500628767 = {
 			isa = PBXGroup;
 			children = (
+				0D3992FA1F87DA2D003962D1 /* SCIGenericWrapper.swift */,
 				0D8D5A081F79585500628767 /* Firebase_Test */,
 				0D8D5A071F79585500628767 /* Products */,
 				E013BFB137D902761D02694E /* Pods */,
@@ -248,6 +251,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D3992FB1F87DA2D003962D1 /* SCIGenericWrapper.swift in Sources */,
 				0D0DFF821F7B24DD00D24B88 /* FireBaseLink.swift in Sources */,
 				0D51113F1F8710AB006660F1 /* ChartViewController.swift in Sources */,
 				0D8D5A0C1F79585500628767 /* TableViewController.swift in Sources */,
