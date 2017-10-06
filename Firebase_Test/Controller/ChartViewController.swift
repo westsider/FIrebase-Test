@@ -27,7 +27,8 @@ class ChartViewController: UIViewController {
         self.addAxis()
         self.addDefaultModifiers()
         self.addDataSeries()
-        //self.addTradeEntry()
+        self.addTradeEntry()
+        // make zoom buttons
     }
 
     fileprivate func addSurface() {
@@ -39,6 +40,25 @@ class ChartViewController: UIViewController {
     }
     
     fileprivate func addAxis() {
+        /*
+         let axisStyle = SCIAxisStyle()
+         
+         let majorPen = SCISolidPenStyle(colorCode: 0xFF393532, withThickness: 0.5)
+         let minorPen = SCISolidPenStyle(colorCode: 0xFF262423, withThickness: 0.5)
+         
+         let textFormat = SCITextFormattingStyle()
+         textFormat.fontName = SCSFontsName.defaultFontName
+         textFormat.fontSize = SCSFontSizes.defaultFontSize
+         
+         axisStyle.majorTickBrush = majorPen
+         axisStyle.majorGridLineBrush = majorPen
+         axisStyle.gridBandBrush = SCISolidBrushStyle(colorCode: 0xE1232120)
+         axisStyle.minorTickBrush = minorPen
+         axisStyle.minorGridLineBrush = minorPen
+         axisStyle.labelStyle = textFormat
+         axisStyle.drawMinorGridLines = true
+         axisStyle.drawMajorBands = true
+         */
         //let xAxis = SCIDateTimeAxis()
         //let xAxis = SCINumericAxis()
         let xAxis = SCICategoryDateTimeAxis()
@@ -71,7 +91,7 @@ class ChartViewController: UIViewController {
         
         ohlcDataSeries.acceptUnsortedData = true
         let items = self.lastPriceList
-        let last30items = Array(items.suffix(10))
+        let last30items = Array(items.suffix(150))
 
         for things in last30items {
             let date:Date = things.date!
@@ -119,6 +139,35 @@ class ChartViewController: UIViewController {
         let groupModifier = SCIChartModifierCollection(childModifiers: [xAxisDragmodifier, yAxisDragmodifier, pinchZoomModifier, extendZoomModifier, rolloverModifier])
         
         surface.chartModifiers = groupModifier
+    }
+    
+    //MARK: - Trade entry margin line
+    func addTradeEntry() {
+        
+        let lastBar = self.lastPriceList.last
+        let sellPrice = lastBar?.shortEntryPrice
+        print("Last Bar Sell Price \(sellPrice!)")
+        let annotationGroup = SCIAnnotationCollection()
+        
+        let horizontalLine1 = SCIHorizontalLineAnnotation()
+        horizontalLine1.coordinateMode = .absolute;
+        horizontalLine1.y1 = SCIGeneric(sellPrice!);
+        horizontalLine1.horizontalAlignment = .stretch
+        horizontalLine1.add(self.buildLineTextLabel("\(sellPrice!)", alignment: .axis, backColor: UIColor.red, textColor: UIColor.white))
+        horizontalLine1.style.linePen = SCISolidPenStyle.init(color: UIColor.red, withThickness:2)
+        annotationGroup.add(horizontalLine1)
+        
+        surface.annotations = annotationGroup
+        
+    }
+    
+    private func buildLineTextLabel(_ text: String, alignment: SCILabelPlacement, backColor: UIColor, textColor: UIColor) -> SCILineAnnotationLabel {
+        let lineText = SCILineAnnotationLabel()
+        lineText.text = text
+        lineText.style.labelPlacement = alignment
+        lineText.style.backgroundColor = backColor
+        lineText.style.textStyle.color = textColor
+        return lineText
     }
 
 }
