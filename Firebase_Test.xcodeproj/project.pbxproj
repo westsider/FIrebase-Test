@@ -53,6 +53,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D5111401F87132B006660F1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0D0DFF7F1F7B061C00D24B88 /* Prices.swift */,
+				0D38A17E1F82C5DB00451D02 /* Dates.swift */,
+				0D0DFF811F7B24DD00D24B88 /* FireBaseLink.swift */,
+			);
+			name = Models;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		0D8D59FD1F79585500628767 = {
 			isa = PBXGroup;
 			children = (
@@ -79,9 +90,7 @@
 				0D7376741F8171A1003C8587 /* MainViewController.swift */,
 				0D8D5A0B1F79585500628767 /* TableViewController.swift */,
 				0D51113E1F8710AB006660F1 /* ChartViewController.swift */,
-				0D0DFF7F1F7B061C00D24B88 /* Prices.swift */,
-				0D38A17E1F82C5DB00451D02 /* Dates.swift */,
-				0D0DFF811F7B24DD00D24B88 /* FireBaseLink.swift */,
+				0D5111401F87132B006660F1 /* Models */,
 				0D8D5A101F79585500628767 /* Assets.xcassets */,
 				0D38A1841F82EA3B00451D02 /* GoogleService-Info.plist */,
 				0D8D5A091F79585500628767 /* AppDelegate.swift */,
