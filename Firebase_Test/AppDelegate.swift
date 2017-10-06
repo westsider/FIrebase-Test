@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
 
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
         let newToken = InstanceID.instanceID().token()
-        print("\nToken: \(newToken)\n")
+        print("\nToken: \(String(describing: newToken))\n")
         connectToFCM()
     }
     
