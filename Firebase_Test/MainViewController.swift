@@ -35,16 +35,20 @@ class MainViewController: UIViewController {
 
         self.navigationItem.title = "Trade Server"
         firebaseLink.authFirebase()
-  
         firebaseLink.fetchData(debug: false) { ( urlCallDone ) in
             if urlCallDone {
                 print("firebase has updated the Prices Object")
-                //self.updateUI()
                 self.updateUISegmented()
             }
         }
     }
     
+    @IBAction func toobarTableViewAction(_ sender: Any) {
+
+        let myVC = storyboard?.instantiateViewController(withIdentifier: "tableVC") as! TablesViewController
+        myVC.lastPriceList = firebaseLink.lastPriceList
+        navigationController?.pushViewController(myVC, animated: true)
+    }
     
     
     func updateUISegmented() {
@@ -98,8 +102,6 @@ class MainViewController: UIViewController {
         }
     }
     
-
-
     func lastPriceLableCalc(lastUpdate: LastPrice)-> Double {
         if let theClose = lastUpdate.close {
             lastPriceLabel.text = String(theClose)
@@ -127,7 +129,8 @@ class MainViewController: UIViewController {
         }
     }
     
-    // Bottom -  upper right = serverConnectTime, Bottom - upper left = lastUpdateTime, Bottom - lower left = priceCurrentLabel
+    //  Bottom - upper right = serverConnectTime
+    //  Bottom - upper left = lastUpdateTime, Bottom - lower left = priceCurrentLabel
     func serverConnectedLable(lastUpdate: LastPrice, debug: Bool) {
      
         if (debug) {
@@ -170,9 +173,7 @@ class MainViewController: UIViewController {
                 serverConnectTime?.text = "No Data"                 // Bottom -  upper right
             }
         }
-        
-        
-        
+
     }
     // Bottom lower right - Connected
     func serverConLable(lastUpdate: LastPrice){
@@ -185,115 +186,4 @@ class MainViewController: UIViewController {
     }
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//func updateUI() {
-//
-//    let lastUpdate = firebaseLink.lastPriceList.last
-//
-//    var thisClose = 00.00
-//
-//    print("\ninLong: \(String(describing: lastUpdate?.inLong)) inShort: \(String(describing: lastUpdate?.inShort)) longE: \(String(describing: firebaseLink.currentLongEntryPrice)) shortE: \(String(describing: firebaseLink.currentShortEntryPrice)) close: \(String(describing: lastUpdate?.close))\n")
-//
-//    if let inLong = lastUpdate?.inLong, let inShort = lastUpdate?.inShort,
-//        let longE:Double = firebaseLink.currentLongEntryPrice,
-//        let shortE:Double = firebaseLink.currentShortEntryPrice,
-//        let close = lastUpdate?.close {
-//
-//        var lastPriceUpdateTop:String?
-//
-//        lastPriceTop.textColor = #colorLiteral(red: 0.6642242074, green: 0.6642400622, blue: 0.6642315388, alpha: 1)
-//
-//        if (inLong) {
-//            // clac Long Profit
-//            let longProfit = close - longE
-//            lastPriceUpdateTop = "Long \(String(describing: longE)) \(String(format: "%.2f", longProfit))"
-//            if (longProfit < 0) {
-//                lastPriceTop.textColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
-//            }
-//        } else if (inShort) {
-//            // clac short Profit
-//            let shortProfit =   shortE - close
-//            //let shortP = String(format: "%.2f", shortProfit)
-//            lastPriceUpdateTop = "Short \(String(describing: shortE)) \(String(format: "%.2f", shortProfit))"
-//            if (shortProfit < 0){
-//                lastPriceTop.textColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
-//            }
-//        } else {
-//            lastPriceUpdateTop = "System Is Flat"
-//            lastPriceTop.textColor = #colorLiteral(red: 0.7540688515, green: 0.7540867925, blue: 0.7540771365, alpha: 1)
-//        }
-//
-//        lastPriceTop?.text = lastPriceUpdateTop!
-//    } else {
-//        print("parse inTade failed")
-//        return
-//    }
-//
-//    if let connectStat = lastUpdate?.connectStatus {
-//        serverConnectedLable.text = connectStat
-//    } else {
-//        serverConnectedLable.text = "loading"
-//    }
-//
-//    if let theClose = lastUpdate?.close {
-//        lastPriceLabel.text = String(theClose)
-//        thisClose = theClose
-//    } else {
-//        lastPriceLabel.text = "loading"
-//    }
-//
-//
-//    let index = firebaseLink.lastPriceList.count
-//    if (index > 3) {
-//        let priorBar = firebaseLink.lastPriceList[index-2]
-//
-//        if let priorClose = priorBar.close {
-//            let priceDiff = thisClose - priorClose
-//            if (priceDiff >= 0) {
-//                priceDifferenceLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-//            }
-//            priceDifferenceLabel.text = String(format:"%.2f", priceDiff)
-//        } else {
-//            priceDifferenceLabel.text = "loading"
-//        }
-//    }
-//
-//    if let lastTime = lastUpdate?.date {
-//        let convertedDate = DateHelper().calcTimeFromLastUpdate(lastTime: lastTime)
-//        priceCurrentLabel.text = convertedDate.0
-//        lastUpdateTime.text = convertedDate.1
-//    }
-//
-//    if let serverDateTime = lastUpdate?.connectTime {
-//
-//        let timeOnly = serverDateTime.components(separatedBy: " ")
-//        print("/nIn ServerDateTime: \(serverDateTime) _______ \(timeOnly)")
-//        // expecting array of 3
-//        if ( timeOnly.count < 3 ) {
-//            serverConnectTime?.text = "00:00"
-//            return
-//        }
-//        let arr = timeOnly[1].components(separatedBy: ":")
-//        print("Arrary: \(arr[0]) \(arr[1])")
-//        var hour = Int(arr[0])
-//        print("Hour: \(String(describing: hour))")
-//        hour = hour! - 3 // adj for EST
-//        let min = arr[1]
-//        serverConnectTime?.text = "\(hour!)" + ":" + min
-//    } else {
-//        serverConnectTime?.text = "No Data"
-//    }
-//}
 
