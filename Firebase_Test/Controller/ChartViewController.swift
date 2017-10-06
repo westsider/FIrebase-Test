@@ -28,7 +28,9 @@ class ChartViewController: UIViewController {
         self.addDefaultModifiers()
         self.addDataSeries()
         self.addTradeEntry()
-        // make zoom buttons
+        // Axis Bigger
+        // make zoom Segmented Control  << - 5 Days + >>
+        // dark gray background
     }
 
     fileprivate func addSurface() {
@@ -74,10 +76,6 @@ class ChartViewController: UIViewController {
     fileprivate func addDataSeries() {
         let upBrush = SCISolidBrushStyle(colorCode: 0x9000AA00)
         let downBrush = SCISolidBrushStyle(colorCode: 0x90FF0000)
-        
-        //let upWickPen = SCISolidPenStyle(colorCode: 0xFF00AA00, withThickness: 0.7)     // up bar color and thickness
-        //let downWickPen = SCISolidPenStyle(colorCode: 0xFFFF0000, withThickness: 0.7)   // down bar color and thickness
-        
         let darkGrayPen = SCISolidPenStyle(color: #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1), withThickness: 0.5)
         let lightGrayPen = SCISolidPenStyle(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), withThickness: 0.5)
         surface.renderableSeries.add(getBarRenderSeries(false, upBodyBrush: upBrush, upWickPen: lightGrayPen, downBodyBrush: downBrush, downWickPen: darkGrayPen, count: 30))
@@ -105,20 +103,11 @@ class ChartViewController: UIViewController {
                                    low: SCIGeneric(things.low!),
                                    close: SCIGeneric(things.close!))
         }
-//        let candleRendereSeries = SCIFastCandlestickRenderableSeries()
-//        candleRendereSeries.dataSeries = ohlcDataSeries
-//        candleRendereSeries.fillUpBrushStyle = upBodyBrush
-//        candleRendereSeries.fillDownBrushStyle = downBodyBrush
-//        candleRendereSeries.strokeUpStyle = upWickPen
-//        candleRendereSeries.strokeDownStyle = downWickPen
-//        return candleRendereSeries
-        
         let barRenderSeries = SCIFastOhlcRenderableSeries()
         barRenderSeries.dataSeries = ohlcDataSeries
         barRenderSeries.strokeUpStyle = upWickPen
         barRenderSeries.strokeDownStyle = downWickPen
         return barRenderSeries
-        
     }
     
     func addDefaultModifiers() {
@@ -165,7 +154,6 @@ class ChartViewController: UIViewController {
         horizontalLine1.add(self.buildLineTextLabel("\(sellPrice!)", alignment: .axis, backColor: UIColor.red, textColor: UIColor.white))
         horizontalLine1.style.linePen = SCISolidPenStyle.init(color: UIColor.red, withThickness:2)
         annotationGroup.add(horizontalLine1)
-        
         surface.annotations = annotationGroup
         
     }
