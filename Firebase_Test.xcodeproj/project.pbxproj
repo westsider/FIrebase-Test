@@ -19,6 +19,7 @@
 		0D8D5A0F1F79585500628767 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8D5A0D1F79585500628767 /* Main.storyboard */; };
 		0D8D5A111F79585500628767 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D8D5A101F79585500628767 /* Assets.xcassets */; };
 		0D8D5A141F79585500628767 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D8D5A121F79585500628767 /* LaunchScreen.storyboard */; };
+		0DE194A91F87F9EC00709968 /* Convert Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE194A81F87F9EC00709968 /* Convert Color.swift */; };
 		40BE516E18C1CC46CB9F3D29 /* Pods_Firebase_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C55E2BAFE3DF5D794DD38B9 /* Pods_Firebase_Test.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		0D8D5A101F79585500628767 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D8D5A131F79585500628767 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0D8D5A151F79585500628767 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0DE194A81F87F9EC00709968 /* Convert Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Convert Color.swift"; sourceTree = "<group>"; };
 		1240F89F52AF4D7D1555EE10 /* Pods-Firebase_Test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Firebase_Test.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Firebase_Test/Pods-Firebase_Test.debug.xcconfig"; sourceTree = "<group>"; };
 		9C55E2BAFE3DF5D794DD38B9 /* Pods_Firebase_Test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Firebase_Test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C267E7FDC14C8752D8409B94 /* Pods-Firebase_Test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Firebase_Test.release.xcconfig"; path = "Pods/Target Support Files/Pods-Firebase_Test/Pods-Firebase_Test.release.xcconfig"; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				0D0DFF7F1F7B061C00D24B88 /* Prices.swift */,
 				0D38A17E1F82C5DB00451D02 /* Dates.swift */,
 				0D0DFF811F7B24DD00D24B88 /* FireBaseLink.swift */,
+				0DE194A81F87F9EC00709968 /* Convert Color.swift */,
 			);
 			name = Models;
 			path = "New Group";
@@ -251,6 +254,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DE194A91F87F9EC00709968 /* Convert Color.swift in Sources */,
 				0D3992FB1F87DA2D003962D1 /* SCIGenericWrapper.swift in Sources */,
 				0D0DFF821F7B24DD00D24B88 /* FireBaseLink.swift in Sources */,
 				0D51113F1F8710AB006660F1 /* ChartViewController.swift in Sources */,

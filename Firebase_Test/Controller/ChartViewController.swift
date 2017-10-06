@@ -74,18 +74,21 @@ class ChartViewController: UIViewController {
     fileprivate func addDataSeries() {
         let upBrush = SCISolidBrushStyle(colorCode: 0x9000AA00)
         let downBrush = SCISolidBrushStyle(colorCode: 0x90FF0000)
-        let upWickPen = SCISolidPenStyle(colorCode: 0xFF00AA00, withThickness: 0.7)
-        let downWickPen = SCISolidPenStyle(colorCode: 0xFFFF0000, withThickness: 0.7)
         
-        surface.renderableSeries.add(getCandleRenderSeries(false, upBodyBrush: upBrush, upWickPen: upWickPen, downBodyBrush: downBrush, downWickPen: downWickPen, count: 30))
+        //let upWickPen = SCISolidPenStyle(colorCode: 0xFF00AA00, withThickness: 0.7)     // up bar color and thickness
+        //let downWickPen = SCISolidPenStyle(colorCode: 0xFFFF0000, withThickness: 0.7)   // down bar color and thickness
+        
+        let darkGrayPen = SCISolidPenStyle(color: #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1), withThickness: 0.5)
+        let lightGrayPen = SCISolidPenStyle(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), withThickness: 0.5)
+        surface.renderableSeries.add(getBarRenderSeries(false, upBodyBrush: upBrush, upWickPen: lightGrayPen, downBodyBrush: downBrush, downWickPen: darkGrayPen, count: 30))
     }
     
-    fileprivate func getCandleRenderSeries(_ isReverse: Bool,
+    fileprivate func getBarRenderSeries(_ isReverse: Bool,
                                            upBodyBrush: SCISolidBrushStyle,
                                            upWickPen: SCISolidPenStyle,
                                            downBodyBrush: SCISolidBrushStyle,
                                            downWickPen: SCISolidPenStyle,
-                                           count: Int) -> SCIFastCandlestickRenderableSeries {
+                                           count: Int) -> SCIFastOhlcRenderableSeries {
         
         let ohlcDataSeries = SCIOhlcDataSeries(xType: .dateTime, yType: .double) // try swiftdatetime
         
@@ -102,14 +105,20 @@ class ChartViewController: UIViewController {
                                    low: SCIGeneric(things.low!),
                                    close: SCIGeneric(things.close!))
         }
-        let candleRendereSeries = SCIFastCandlestickRenderableSeries()
-        candleRendereSeries.dataSeries = ohlcDataSeries
-        candleRendereSeries.fillUpBrushStyle = upBodyBrush
-        candleRendereSeries.fillDownBrushStyle = downBodyBrush
-        candleRendereSeries.strokeUpStyle = upWickPen
-        candleRendereSeries.strokeDownStyle = downWickPen
+//        let candleRendereSeries = SCIFastCandlestickRenderableSeries()
+//        candleRendereSeries.dataSeries = ohlcDataSeries
+//        candleRendereSeries.fillUpBrushStyle = upBodyBrush
+//        candleRendereSeries.fillDownBrushStyle = downBodyBrush
+//        candleRendereSeries.strokeUpStyle = upWickPen
+//        candleRendereSeries.strokeDownStyle = downWickPen
+//        return candleRendereSeries
         
-        return candleRendereSeries
+        let barRenderSeries = SCIFastOhlcRenderableSeries()
+        barRenderSeries.dataSeries = ohlcDataSeries
+        barRenderSeries.strokeUpStyle = upWickPen
+        barRenderSeries.strokeDownStyle = downWickPen
+        return barRenderSeries
+        
     }
     
     func addDefaultModifiers() {
