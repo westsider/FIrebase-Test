@@ -21,16 +21,17 @@ class ChartViewController: UIViewController {
     
     var ohlcRenderableSeries: SCIFastOhlcRenderableSeries!
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addSurface()
-        addAxis()
+        addAxis(BarsToShow: 150)
         addDefaultModifiers()
         addDataSeries()
         getTradeEntry()
 
-        // down bars red till i know how bkg
         // Axis Bigger - No Joy
         // white background - No joy
         
@@ -54,11 +55,14 @@ class ChartViewController: UIViewController {
     
     // surface.renderableSeriesAreaBorder.color = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
     
-    fileprivate func addAxis() {
+    fileprivate func addAxis(BarsToShow: Int) {
 
+        let totalBars = lastPriceList.count
+        let rangeStart = totalBars - BarsToShow
         // horizontal - Date axis
         let xAxis = SCICategoryDateTimeAxis()
         //xAxis.axisId = "xaxis"
+        xAxis.visibleRange = SCIDoubleRange(min: SCIGeneric(rangeStart), max: SCIGeneric(totalBars))
         xAxis.growBy = SCIDoubleRange(min: SCIGeneric(0.1), max: SCIGeneric(0.1))
         surface.xAxes.add(xAxis)
         
@@ -72,7 +76,7 @@ class ChartViewController: UIViewController {
     fileprivate func addDataSeries() {
         let upBrush = SCISolidBrushStyle(colorCode: 0x9000AA00)
         let downBrush = SCISolidBrushStyle(colorCode: 0x90FF0000)
-        let darkGrayPen = SCISolidPenStyle(color: #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1), withThickness: 0.5)
+        let darkGrayPen = SCISolidPenStyle(color: #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1), withThickness: 0.5)
         let lightGrayPen = SCISolidPenStyle(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), withThickness: 0.5)
         surface.renderableSeries.add(getBarRenderSeries(false, upBodyBrush: upBrush, upWickPen: lightGrayPen, downBodyBrush: downBrush, downWickPen: darkGrayPen, count: 30))
     }
@@ -88,9 +92,9 @@ class ChartViewController: UIViewController {
         
         ohlcDataSeries.acceptUnsortedData = true
         let items = self.lastPriceList
-        let last30items = Array(items.suffix(150))
-
-        for things in last30items {
+        //let last30items = Array(items.suffix(150))
+        print("\nCount: \(items.count)")
+        for things in items {
             let date:Date = things.date!
             ///print("Date OHLC: \(date) \(items[i].open!) \(items[i].high!) \(items[i].low!) \(items[i].close!)")
             ohlcDataSeries.appendX(SCIGeneric(date),
@@ -141,7 +145,7 @@ class ChartViewController: UIViewController {
         let last30items = Array(items.suffix(150))
         let lastBar = last30items.last
         let sellPrice = lastBar?.shortEntryPrice
-        addTradeEntry(SignalLine: sellPrice!, StartBar: 50, EndBar: 150)
+        addTradeEntry(SignalLine: sellPrice!, StartBar: 438, EndBar: 538)
     }
     
     func addTradeEntry(SignalLine: Double, StartBar: Int, EndBar: Int) {
@@ -156,7 +160,7 @@ class ChartViewController: UIViewController {
         horizontalLine1.horizontalAlignment = .center
         horizontalLine1.isEditable = false
         horizontalLine1.style.linePen = SCISolidPenStyle.init(color: UIColor.red, withThickness: 2.0)
-        horizontalLine1.add(self.buildLineTextLabel("Sell", alignment: .right, backColor: UIColor.clear, textColor: UIColor.red))
+        horizontalLine1.add(self.buildLineTextLabel("Sell \(SignalLine)", alignment: .top, backColor: UIColor.clear, textColor: UIColor.red))
         surface.annotations.add(horizontalLine1)
     }
 
