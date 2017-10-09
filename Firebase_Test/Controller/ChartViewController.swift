@@ -5,6 +5,7 @@
 //  Created by Warren Hansen on 10/5/17.
 //  Copyright © 2017 Warren Hansen. All rights reserved.
 //
+//  MARK: - Todo annimation of circle https://github.com/foolsong/EasyChartsSwift?ref=ioscookies.com
 
 import Foundation
 import UIKit
@@ -23,52 +24,47 @@ class ChartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.addSurface()
-        self.addAxis()
-        self.addDefaultModifiers()
-        self.addDataSeries()
-        self.addTradeEntry()
-        // Axis Bigger
+        addSurface()
+        addAxis()
+        addDefaultModifiers()
+        addDataSeries()
+        getTradeEntry()
+
+        // down bars red till i know how bkg
+        // Axis Bigger - No Joy
+        // white background - No joy
+        
+        // show only n bars
         // make zoom Segmented Control  << - 5 Days + >>
-        // dark gray background
+
     }
 
+
+    
     fileprivate func addSurface() {
         surface = SCIChartSurface(frame: self.view.bounds)
         surface.translatesAutoresizingMaskIntoConstraints = true
         surface.frame = self.view.bounds
         surface.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        // background color
+        //surface.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        //surface.renderableSeriesAreaFill.color = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         self.view.addSubview(surface)
     }
     
+    // surface.renderableSeriesAreaBorder.color = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+    
     fileprivate func addAxis() {
-        /*
-         let axisStyle = SCIAxisStyle()
-         
-         let majorPen = SCISolidPenStyle(colorCode: 0xFF393532, withThickness: 0.5)
-         let minorPen = SCISolidPenStyle(colorCode: 0xFF262423, withThickness: 0.5)
-         
-         let textFormat = SCITextFormattingStyle()
-         textFormat.fontName = SCSFontsName.defaultFontName
-         textFormat.fontSize = SCSFontSizes.defaultFontSize
-         
-         axisStyle.majorTickBrush = majorPen
-         axisStyle.majorGridLineBrush = majorPen
-         axisStyle.gridBandBrush = SCISolidBrushStyle(colorCode: 0xE1232120)
-         axisStyle.minorTickBrush = minorPen
-         axisStyle.minorGridLineBrush = minorPen
-         axisStyle.labelStyle = textFormat
-         axisStyle.drawMinorGridLines = true
-         axisStyle.drawMajorBands = true
-         */
-        //let xAxis = SCIDateTimeAxis()
-        //let xAxis = SCINumericAxis()
+
+        // horizontal - Date axis
         let xAxis = SCICategoryDateTimeAxis()
-        
+        //xAxis.axisId = "xaxis"
         xAxis.growBy = SCIDoubleRange(min: SCIGeneric(0.1), max: SCIGeneric(0.1))
         surface.xAxes.add(xAxis)
         
+        // verticle - Price Axis
         let yAxis = SCINumericAxis()
+        //yAxis.axisId = "yaxis"
         yAxis.growBy = SCIDoubleRange(min: SCIGeneric(0.1), max: SCIGeneric(0.1))
         surface.yAxes.add(yAxis)
     }
@@ -138,26 +134,32 @@ class ChartViewController: UIViewController {
         
         surface.chartModifiers = groupModifier
     }
-    
-    //MARK: - Trade entry margin line
-    func addTradeEntry() {
-        
-        let lastBar = self.lastPriceList.last
+
+    func getTradeEntry() {
+        //MARK: - TODO add logic fo short or long
+        let items = self.lastPriceList
+        let last30items = Array(items.suffix(150))
+        let lastBar = last30items.last
         let sellPrice = lastBar?.shortEntryPrice
-        print("Last Bar Sell Price \(sellPrice!)")
-        let annotationGroup = SCIAnnotationCollection()
-        
-        let horizontalLine1 = SCIHorizontalLineAnnotation()
-        horizontalLine1.coordinateMode = .absolute;
-        horizontalLine1.y1 = SCIGeneric(sellPrice!);
-        horizontalLine1.horizontalAlignment = .stretch
-        horizontalLine1.add(self.buildLineTextLabel("\(sellPrice!)", alignment: .axis, backColor: UIColor.red, textColor: UIColor.white))
-        horizontalLine1.style.linePen = SCISolidPenStyle.init(color: UIColor.red, withThickness:2)
-        annotationGroup.add(horizontalLine1)
-        surface.annotations = annotationGroup
-        
+        addTradeEntry(SignalLine: sellPrice!, StartBar: 50, EndBar: 150)
     }
     
+    func addTradeEntry(SignalLine: Double, StartBar: Int, EndBar: Int) {
+
+        let horizontalLine1 = SCIHorizontalLineAnnotation()
+        horizontalLine1.coordinateMode = .absolute;
+        //horizontalLine1.xAxisId = "xaxis"
+        //horizontalLine1.yAxisId = "yaxis"
+        horizontalLine1.x1 = SCIGeneric(StartBar)  // lower number pushes to left side
+        horizontalLine1.x2 = SCIGeneric(EndBar) // last bar is 150?
+        horizontalLine1.y1 = SCIGeneric(SignalLine)
+        horizontalLine1.horizontalAlignment = .center
+        horizontalLine1.isEditable = false
+        horizontalLine1.style.linePen = SCISolidPenStyle.init(color: UIColor.red, withThickness: 2.0)
+        horizontalLine1.add(self.buildLineTextLabel("Sell", alignment: .right, backColor: UIColor.clear, textColor: UIColor.red))
+        surface.annotations.add(horizontalLine1)
+    }
+
     private func buildLineTextLabel(_ text: String, alignment: SCILabelPlacement, backColor: UIColor, textColor: UIColor) -> SCILineAnnotationLabel {
         let lineText = SCILineAnnotationLabel()
         lineText.text = text
