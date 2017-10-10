@@ -25,6 +25,8 @@ class ChartViewController: UIViewController {
     
     let showEntry = ShowEntry()
     
+    let firebaseLink = FirebaseLink()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,6 +39,18 @@ class ChartViewController: UIViewController {
         addDefaultModifiers()
         addDataSeries()
         surface.annotations.add( showEntry.getTradeEntry(allPrices: lastPriceList) )
+        
+        // try live update
+        let on = false
+        if (on) {
+            firebaseLink.fetchData(debug: false) { ( urlCallDone ) in
+                if urlCallDone {
+                    print("firebase has updated the Prices Object")
+                    //self.updateUISegmented()
+                }
+            }
+        }
+        
     }
 
     fileprivate func addSurface() {

@@ -14,53 +14,52 @@ class ShowEntry {
     var horizontalLine = SCIHorizontalLineAnnotation()
     
     func getTradeEntry(allPrices: [LastPrice])-> SCIHorizontalLineAnnotation {
-        //MARK: - TODO add logic fo short or long
         let items = allPrices
         let lastBarnum = items.count
         let lastBar = allPrices.last
-        let currentBar = lastBar?.currentBar
-        let diff = lastBarnum - currentBar!
+        let currentBar = (lastBar?.currentBar)! - 1
+        let buyPrice = lastBar?.longEntryPrice
+        let sellPrice = lastBar?.shortEntryPrice
+        let shortLineLength = lastBar?.shortLineLength
+        let longLineLength = lastBar?.longLineLength
         
-        print("\nCurrent bar \(currentBar!) items.count \(lastBarnum) diff: \(diff)")
-        
-        // in short
-        if (lastBar?.inShort == true) {
-            let currentBar  = lastBarnum - 1
-            let lineLength = lastBar?.shortLineLength
-            let startBar = currentBar - lineLength!
-            let sellPrice = lastBar?.shortEntryPrice
+        // in long looking short
+        if (lastBar?.inLong == true && sellPrice != 0 ) {
+            let startBar = currentBar - shortLineLength!
             horizontalLine = addTradeEntry(SignalLine: sellPrice!, StartBar: startBar, EndBar: currentBar, Color: UIColor.red, Direction: "Sold")
             print("\nCurrentBar: \(currentBar) start bar \(startBar) lastBarArray\(lastBarnum)")
         }
-        // in long
-        if ( lastBar?.inLong == true ) {
-            let currentBar  = lastBarnum - 1
-            let lineLength = lastBar?.longLineLength
-            let startBar = currentBar - lineLength!
-            let buyPrice = lastBar?.longEntryPrice
+        
+        // in long but no short yet
+        if (lastBar?.inLong == true && sellPrice == 0 ) {
+            let startBar = currentBar - longLineLength!
             horizontalLine = addTradeEntry(SignalLine: buyPrice!, StartBar: startBar, EndBar: currentBar, Color: UIColor.green, Direction: "Bought")
             print("\nLastBarnume - 1: \(currentBar) Current bar \(String(describing: lastBar?.currentBar)) items.count \(lastBarnum)")
         }
         
-        // flat needs to be addressed
-        
-        // use market replay to test this!
-        // looking long or short while in a trade? how. do. it. work.
-        // might need to call this horizontalLine2
-        if (lastBar?.inShort == false) {
+        // in short looking long
+        if ( lastBar?.inShort == true && buyPrice != 0) {
+            let startBar = currentBar - longLineLength!
+            horizontalLine = addTradeEntry(SignalLine: buyPrice!, StartBar: startBar, EndBar: currentBar, Color: UIColor.green, Direction: "Bought")
+            print("\nLastBarnume - 1: \(currentBar) Current bar \(String(describing: lastBar?.currentBar)) items.count \(lastBarnum)")
+        }
+        // in short but no long yet
+        if ( lastBar?.inShort == true && buyPrice == 0 ) {
+            let startBar = currentBar - shortLineLength!
+            horizontalLine = addTradeEntry(SignalLine: sellPrice!, StartBar: startBar, EndBar: currentBar, Color: UIColor.red, Direction: "Sold")
+            print("\nCurrentBar: \(currentBar) start bar \(startBar) lastBarArray\(lastBarnum)")
+        }
+        // flat
+        if (lastBar?.inShort == false && lastBar?.inLong == false )  {
             // looking short
-            let currentBar  = lastBarnum - 1
-            let lineLength = lastBar?.shortLineLength
-            let startBar = currentBar - lineLength!
-            let sellPrice = lastBar?.shortEntryPrice
-            horizontalLine = addTradeEntry(SignalLine: sellPrice!, StartBar: startBar, EndBar: currentBar, Color: UIColor.red, Direction: "Sell")
-        } else if ( lastBar?.inLong == false ) {
-            //looking long
-            let currentBar  = lastBarnum - 1
-            let lineLength = lastBar?.longLineLength
-            let startBar = currentBar - lineLength!
-            let buyPrice = lastBar?.longEntryPrice
-            horizontalLine = addTradeEntry(SignalLine: buyPrice!, StartBar: startBar, EndBar: currentBar, Color: UIColor.green, Direction: "Buy")
+            if ( sellPrice != 0) {
+                let startBar = currentBar - shortLineLength!
+                horizontalLine = addTradeEntry(SignalLine: sellPrice!, StartBar: startBar, EndBar: currentBar, Color: UIColor.red, Direction: "Sell")
+                // looking long
+            } else if ( buyPrice != 0 ) {
+                let startBar = currentBar - longLineLength!
+                horizontalLine = addTradeEntry(SignalLine: buyPrice!, StartBar: startBar, EndBar: currentBar, Color: UIColor.green, Direction: "Buy")
+            }
         }
         return horizontalLine
         
@@ -77,7 +76,6 @@ class ShowEntry {
         horizontalLine1.isEditable = false
         horizontalLine1.style.linePen = SCISolidPenStyle.init(color: Color, withThickness: 2.0)
         horizontalLine1.add(self.buildLineTextLabel("\(Direction) \(SignalLine)", alignment: .top, backColor: UIColor.clear, textColor: Color))
-        //surface.annotations.add(horizontalLine1)
         return horizontalLine1
     }
     
