@@ -35,7 +35,7 @@ class MainViewController: UIViewController {
 
         self.navigationItem.title = "Trade Server"
         firebaseLink.authFirebase()
-        firebaseLink.fetchData(debug: true) { ( urlCallDone ) in
+        firebaseLink.fetchData(debug: false) { ( urlCallDone ) in
             if urlCallDone {
                 print("firebase has updated the Prices Object")
                 self.updateUISegmented()

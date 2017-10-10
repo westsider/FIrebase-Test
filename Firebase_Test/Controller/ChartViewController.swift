@@ -21,7 +21,7 @@ class ChartViewController: UIViewController {
     
     var ohlcRenderableSeries: SCIFastOhlcRenderableSeries!
     
-    
+     let annotationGroup = SCIAnnotationCollection()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,16 +35,9 @@ class ChartViewController: UIViewController {
         addDefaultModifiers()
         addDataSeries()
         getTradeEntry()
-
-        // Axis Bigger - No Joy
-        // white background - No joy
-        // add ipdad icons
-        // make zoom Segmented Control  << - 5 Days + >>
-
+        surface.annotations = annotationGroup
     }
 
-
-    
     fileprivate func addSurface() {
         surface = SCIChartSurface(frame: self.view.bounds)
         surface.translatesAutoresizingMaskIntoConstraints = true
@@ -95,8 +88,7 @@ class ChartViewController: UIViewController {
         
         ohlcDataSeries.acceptUnsortedData = true
         let items = self.lastPriceList
-        //let last30items = Array(items.suffix(150))
-        print("\nCount: \(items.count)")
+
         for things in items {
             let date:Date = things.date!
             ///print("Date OHLC: \(date) \(items[i].open!) \(items[i].high!) \(items[i].low!) \(items[i].close!)")
@@ -105,12 +97,61 @@ class ChartViewController: UIViewController {
                                    high: SCIGeneric(things.high!),
                                    low: SCIGeneric(things.low!),
                                    close: SCIGeneric(things.close!))
+            
+            // show entries and exits on chart
+            if let signal = things.signal {
+                if ( signal != 0 ) {
+                    if let currentBar = things.currentBar,  let high = things.high, let low = things.low, let close = things.close {
+                        showTradesOnChart(currentBar: currentBar, signal: signal, high: high, low: low, close: close)
+                    }
+                }
+            }
         }
         let barRenderSeries = SCIFastOhlcRenderableSeries()
         barRenderSeries.dataSeries = ohlcDataSeries
         barRenderSeries.strokeUpStyle = upWickPen
         barRenderSeries.strokeDownStyle = downWickPen
         return barRenderSeries
+    }
+    
+    func showTradesOnChart(currentBar: Int, signal: Double, high: Double, low: Double, close:Double) {
+        if(signal == 1) {
+            print("\nLong signal: \(signal) on bar \(currentBar)")
+            annotationGroup.add( createUpArrow(Date: currentBar, Entry: low) )
+        }
+        if(signal == -1) {
+            print("\nShrt signal: \(signal) on bar \(currentBar)")
+            annotationGroup.add( createDnArrow(Date: currentBar, Entry: high) )
+        }
+        
+        if(signal == -2 || signal == 2) {
+            print("\nExit signal: \(signal) on bar \(currentBar)")
+            annotationGroup.add( createExit(Date: currentBar, Entry: close) )
+        }
+    }
+    
+    func createUpArrow(Date: Int, Entry:Double)-> SCICustomAnnotation {
+        let customAnnotationGreen = SCICustomAnnotation()
+        customAnnotationGreen.customView = UIImageView.init(image: UIImage.init(named: "triangleUp"))
+        customAnnotationGreen.x1=SCIGeneric(Date)
+        customAnnotationGreen.y1=SCIGeneric(Entry)
+        return customAnnotationGreen
+    }
+    
+    func createDnArrow(Date: Int, Entry:Double)-> SCICustomAnnotation {
+        let customAnnotationGreen = SCICustomAnnotation()
+        customAnnotationGreen.customView = UIImageView.init(image: UIImage.init(named: "triangleDown"))
+        customAnnotationGreen.x1=SCIGeneric(Date)
+        customAnnotationGreen.y1=SCIGeneric(Entry)
+        return customAnnotationGreen
+    }
+    
+    func createExit(Date: Int, Entry:Double)-> SCICustomAnnotation {
+        let customAnnotationGreen = SCICustomAnnotation()
+        customAnnotationGreen.customView = UIImageView.init(image: UIImage.init(named: "exit"))
+        customAnnotationGreen.x1=SCIGeneric(Date)
+        customAnnotationGreen.y1=SCIGeneric(Entry)
+        return customAnnotationGreen
     }
     
     func addDefaultModifiers() {
@@ -139,8 +180,11 @@ class ChartViewController: UIViewController {
         //MARK: - TODO add logic fo short or long
         let items = self.lastPriceList
         let lastBarnum = items.count
-        
         let lastBar = self.lastPriceList.last
+        let currentBar = lastBar?.currentBar
+        let diff = lastBarnum - currentBar!
+        
+        print("\nCurrent bar \(currentBar!) items.count \(lastBarnum) diff: \(diff)")
         
         // in short
         if (lastBar?.inShort == true) {
@@ -158,11 +202,14 @@ class ChartViewController: UIViewController {
             let startBar = currentBar - lineLength!
             let buyPrice = lastBar?.longEntryPrice
             addTradeEntry(SignalLine: buyPrice!, StartBar: startBar, EndBar: currentBar, Color: UIColor.green, Direction: "Bought")
-            print("\nCurrentBar: \(currentBar) start bar \(startBar) lastBarArray\(lastBarnum)")
+            print("\nLastBarnume - 1: \(currentBar) Current bar \(String(describing: lastBar?.currentBar)) items.count \(lastBarnum)")
         }
         
-        // flat or looking long or short
-        // might need to call this line 2
+        // flat needs to be addressed
+        
+        // use market replay to test this!
+        // looking long or short while in a trade? how. do. it. work.
+        // might need to call this horizontalLine2
         if (lastBar?.inShort == false) {
             // looking short
             let currentBar  = lastBarnum - 1
