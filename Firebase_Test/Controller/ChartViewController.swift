@@ -27,15 +27,18 @@ class ChartViewController: UIViewController {
         super.viewDidLoad()
         
         addSurface()
-        addAxis(BarsToShow: 150)
+        if UIDevice().model == "iPad" {
+            addAxis(BarsToShow: 300)
+        } else {
+           addAxis(BarsToShow: 150)
+        }
         addDefaultModifiers()
         addDataSeries()
         getTradeEntry()
 
         // Axis Bigger - No Joy
         // white background - No joy
-        
-        // show only n bars
+        // add ipdad icons
         // make zoom Segmented Control  << - 5 Days + >>
 
     }
@@ -76,8 +79,8 @@ class ChartViewController: UIViewController {
     fileprivate func addDataSeries() {
         let upBrush = SCISolidBrushStyle(colorCode: 0x9000AA00)
         let downBrush = SCISolidBrushStyle(colorCode: 0x90FF0000)
-        let darkGrayPen = SCISolidPenStyle(color: #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1), withThickness: 0.5)
-        let lightGrayPen = SCISolidPenStyle(color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), withThickness: 0.5)
+        let darkGrayPen = SCISolidPenStyle(color: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1), withThickness: 0.5)
+        let lightGrayPen = SCISolidPenStyle(color: #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1), withThickness: 0.5)
         surface.renderableSeries.add(getBarRenderSeries(false, upBodyBrush: upBrush, upWickPen: lightGrayPen, downBodyBrush: downBrush, downWickPen: darkGrayPen, count: 30))
     }
     
@@ -113,17 +116,12 @@ class ChartViewController: UIViewController {
     func addDefaultModifiers() {
         
         let xAxisDragmodifier = SCIXAxisDragModifier()
-        
         xAxisDragmodifier.dragMode = .scale
         xAxisDragmodifier.clipModeX = .none
-        
         let yAxisDragmodifier = SCIYAxisDragModifier()
         yAxisDragmodifier.dragMode = .pan
-        
         let extendZoomModifier = SCIZoomExtentsModifier()
-        
         let pinchZoomModifier = SCIPinchZoomModifier()
-        
         let rolloverModifier = SCIRolloverModifier()
         rolloverModifier.style.tooltipSize = CGSize(width: 200, height: CGFloat.nan)
         
@@ -133,34 +131,68 @@ class ChartViewController: UIViewController {
         marker.strokeStyle = SCISolidPenStyle(colorCode:0xFF390032,withThickness:0.25)
         marker.fillStyle = SCISolidBrushStyle(colorCode:0xE1245120)
         rolloverModifier.style.pointMarker = marker
-        
         let groupModifier = SCIChartModifierCollection(childModifiers: [xAxisDragmodifier, yAxisDragmodifier, pinchZoomModifier, extendZoomModifier, rolloverModifier])
-        
         surface.chartModifiers = groupModifier
     }
 
     func getTradeEntry() {
         //MARK: - TODO add logic fo short or long
         let items = self.lastPriceList
-        let last30items = Array(items.suffix(150))
-        let lastBar = last30items.last
-        let sellPrice = lastBar?.shortEntryPrice
-        addTradeEntry(SignalLine: sellPrice!, StartBar: 438, EndBar: 538)
+        let lastBarnum = items.count
+        
+        let lastBar = self.lastPriceList.last
+        
+        // in short
+        if (lastBar?.inShort == true) {
+            let currentBar  = lastBarnum - 1
+            let lineLength = lastBar?.shortLineLength
+            let startBar = currentBar - lineLength!
+            let sellPrice = lastBar?.shortEntryPrice
+            addTradeEntry(SignalLine: sellPrice!, StartBar: startBar, EndBar: currentBar, Color: UIColor.red, Direction: "Sold")
+            print("\nCurrentBar: \(currentBar) start bar \(startBar) lastBarArray\(lastBarnum)")
+        }
+        // in long
+        if ( lastBar?.inLong == true ) {
+            let currentBar  = lastBarnum - 1
+            let lineLength = lastBar?.longLineLength
+            let startBar = currentBar - lineLength!
+            let buyPrice = lastBar?.longEntryPrice
+            addTradeEntry(SignalLine: buyPrice!, StartBar: startBar, EndBar: currentBar, Color: UIColor.green, Direction: "Bought")
+            print("\nCurrentBar: \(currentBar) start bar \(startBar) lastBarArray\(lastBarnum)")
+        }
+        
+        // flat or looking long or short
+        // might need to call this line 2
+        if (lastBar?.inShort == false) {
+            // looking short
+            let currentBar  = lastBarnum - 1
+            let lineLength = lastBar?.shortLineLength
+            let startBar = currentBar - lineLength!
+            let sellPrice = lastBar?.shortEntryPrice
+            addTradeEntry(SignalLine: sellPrice!, StartBar: startBar, EndBar: currentBar, Color: UIColor.red, Direction: "Sell")
+        } else if ( lastBar?.inLong == false ) {
+            //looking long
+            let currentBar  = lastBarnum - 1
+            let lineLength = lastBar?.longLineLength
+            let startBar = currentBar - lineLength!
+            let buyPrice = lastBar?.longEntryPrice
+            addTradeEntry(SignalLine: buyPrice!, StartBar: startBar, EndBar: currentBar, Color: UIColor.green, Direction: "Buy")
+        }
+        
+        
     }
     
-    func addTradeEntry(SignalLine: Double, StartBar: Int, EndBar: Int) {
+    private func addTradeEntry(SignalLine: Double, StartBar: Int, EndBar: Int, Color: UIColor, Direction: String) {
 
         let horizontalLine1 = SCIHorizontalLineAnnotation()
         horizontalLine1.coordinateMode = .absolute;
-        //horizontalLine1.xAxisId = "xaxis"
-        //horizontalLine1.yAxisId = "yaxis"
-        horizontalLine1.x1 = SCIGeneric(StartBar)  // lower number pushes to left side
-        horizontalLine1.x2 = SCIGeneric(EndBar) // last bar is 150?
-        horizontalLine1.y1 = SCIGeneric(SignalLine)
+        horizontalLine1.x1 = SCIGeneric(StartBar)   // lower number pushes to left side of x axis
+        horizontalLine1.x2 = SCIGeneric(EndBar)     // Higher number pushes bar right of x axis
+        horizontalLine1.y1 = SCIGeneric(SignalLine) // the position on y (price) axis
         horizontalLine1.horizontalAlignment = .center
         horizontalLine1.isEditable = false
-        horizontalLine1.style.linePen = SCISolidPenStyle.init(color: UIColor.red, withThickness: 2.0)
-        horizontalLine1.add(self.buildLineTextLabel("Sell \(SignalLine)", alignment: .top, backColor: UIColor.clear, textColor: UIColor.red))
+        horizontalLine1.style.linePen = SCISolidPenStyle.init(color: Color, withThickness: 2.0)
+        horizontalLine1.add(self.buildLineTextLabel("\(Direction) \(SignalLine)", alignment: .top, backColor: UIColor.clear, textColor: Color))
         surface.annotations.add(horizontalLine1)
     }
 
