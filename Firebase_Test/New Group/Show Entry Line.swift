@@ -65,6 +65,17 @@ class ShowEntry {
         
     }
     
+    func addHorizontalLine(Long: Bool, Price: Double, LineLength: Int, CurrentBar: Int) -> SCIHorizontalLineAnnotation {
+        let startBar = CurrentBar - LineLength
+        if ( Long ) {
+            horizontalLine = addTradeEntry(SignalLine: Price, StartBar: startBar, EndBar: CurrentBar, Color: UIColor.green, Direction: "L ")
+        } else {
+            horizontalLine = addTradeEntry(SignalLine: Price, StartBar: startBar, EndBar: CurrentBar, Color: UIColor.red, Direction: "S ")
+        }
+        return horizontalLine
+    }
+    
+    
     private func addTradeEntry(SignalLine: Double, StartBar: Int, EndBar: Int, Color: UIColor, Direction: String) -> SCIHorizontalLineAnnotation{
         
         let horizontalLine1 = SCIHorizontalLineAnnotation()

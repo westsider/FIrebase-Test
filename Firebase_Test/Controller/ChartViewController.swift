@@ -104,6 +104,10 @@ class ChartViewController: UIViewController {
         ohlcDataSeries.acceptUnsortedData = true
         let items = self.lastPriceList
 
+        var lastLongEntryLine = 0
+        var lastLongEntryPrice = 0.0
+        var lastShortEntryLine = 0
+        var lastShortEntryPrice = 0.0
         for things in items {
             let date:Date = things.date!
             ///print("Date OHLC: \(date) \(items[i].open!) \(items[i].high!) \(items[i].low!) \(items[i].close!)")
@@ -120,6 +124,31 @@ class ChartViewController: UIViewController {
                         surface.annotations = showTrades.showTradesOnChart(currentBar: currentBar, signal: signal, high: high, low: low, close: close)
                     }
                 }
+            }
+            
+            // show past long entrylines on chart
+            if let longEntryLine = things.longLineLength,
+                let longEntryPrice = things.longEntryPrice,
+                let currentBar = things.currentBar {
+                //print("\nIn looking for long entries...\(String(describing: longEntryLine)) \(lastLongEntryLine)")
+                // mark last line
+                if (longEntryLine == 0 && lastLongEntryLine != 0 ) {
+                    //print("longEntryLine == 0 && lastLongEntryLine != 0 @ \(lastLongEntryPrice)\n")
+                    let hLine = showEntry.addHorizontalLine(Long: true, Price: lastLongEntryPrice, LineLength: lastLongEntryLine, CurrentBar: currentBar)
+                    surface.annotations.add( hLine )
+                }
+                lastLongEntryLine = longEntryLine
+                lastLongEntryPrice = longEntryPrice
+            }
+            // show past short entrylines on chart
+            if let shortEntryLine = things.shortLineLength, let shortEntryPrice = things.shortEntryPrice, let currentBar = things.currentBar {
+                // mark last line
+                if (shortEntryLine == 0 && lastShortEntryLine != 0 ) {
+                    let hLine = showEntry.addHorizontalLine(Long: false, Price: lastShortEntryPrice, LineLength: lastShortEntryLine, CurrentBar: currentBar)
+                    surface.annotations.add( hLine )
+                }
+                lastShortEntryLine = shortEntryLine
+                lastShortEntryPrice = shortEntryPrice
             }
         }
         let barRenderSeries = SCIFastOhlcRenderableSeries()
