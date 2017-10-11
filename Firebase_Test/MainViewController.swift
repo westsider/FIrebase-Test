@@ -157,7 +157,7 @@ class MainViewController: UIViewController {
                     priceDifferenceLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
                 }
                 // send alert if closes were the same
-                if ( priceDiff == 0 ) {
+                if ( priceDiff == 0.0 ) {
                     let myContent = ["Server Status", "Suspicious Price", "Last two closes were the same"]
                     sendNotification(content: myContent)
                     priceDifferenceLabel.textColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
@@ -182,6 +182,12 @@ class MainViewController: UIViewController {
         } else {
             if let lastTime = lastUpdate.date {
                 let convertedDate = DateHelper().calcTimeFromLastUpdate(lastTime: lastTime)
+                // time elaplse greater than 31 mins or 1 hour = send notifiation
+                if ( convertedDate.2 ) {
+                    print("\nSending late update alert!\n")
+                    let myContent = ["Server Status", "Suspicious Time", "Last update was \(convertedDate.0) ago"] // watch skips middle subtitle
+                    sendNotification(content: myContent)
+                }
                 priceCurrentLabel.text = convertedDate.0    // lower left
                 // correct for 9:0 to 9:00
                 var timeOfLastUpdate = convertedDate.1
