@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class MainViewController: UIViewController {
     
@@ -41,6 +42,35 @@ class MainViewController: UIViewController {
                 self.updateUISegmented()
             }
         }
+        initNotificaationSetupCheck()
+    }
+    
+    func initNotificaationSetupCheck() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge ])
+        { ( success, error) in
+            if success {
+                print("\n*** Notifiation Permission Granted ***\n")
+            } else {
+                print("\n----------------------------------------------------------\n------------ There was a problem with permissions ---------------\n----------------------------------------------------------\n\(String(describing: error))")
+            }
+        }
+    }
+    
+    @IBAction func notificationTestAction(_ sender: Any) {
+        let myContent = ["Server Status", "Suspicious Price", "Last two closes were the same"] // watch skips middle subtitle
+        sendNotification(content: myContent)
+    }
+    
+    func sendNotification(content: [String]) {
+        let notification = UNMutableNotificationContent()
+        notification.title = content[0]
+        notification.subtitle = content[1]
+        notification.body = content[2]
+        notification.sound = UNNotificationSound.default()
+        
+        let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let request = UNNotificationRequest(identifier: "Notification1", content: notification, trigger: notificationTrigger)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
     
     @IBAction func toobarTableViewAction(_ sender: Any) {
@@ -126,6 +156,13 @@ class MainViewController: UIViewController {
                 if (priceDiff >= 0) {
                     priceDifferenceLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
                 }
+                // send alert if closes were the same
+                if ( priceDiff == 0 ) {
+                    let myContent = ["Server Status", "Suspicious Price", "Last two closes were the same"]
+                    sendNotification(content: myContent)
+                    priceDifferenceLabel.textColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+                    priceDifferenceLabel.text = "Same Close!"
+                }
                 priceDifferenceLabel.text = String(format:"%.2f", priceDiff)
             } else {
                 priceDifferenceLabel.text = "loading"
@@ -133,6 +170,7 @@ class MainViewController: UIViewController {
         }
     }
     
+    //MARK: - TODO  notify is last update > 31 minutes
     //  Bottom - upper right = serverConnectTime
     //  Bottom - upper left = lastUpdateTime, Bottom - lower left = priceCurrentLabel
     func serverConnectedLable(lastUpdate: LastPrice, debug: Bool) {
@@ -179,6 +217,7 @@ class MainViewController: UIViewController {
         }
 
     }
+    //MARK: - TODO notification if server disconnects
     // Bottom lower right - Connected
     func serverConLable(lastUpdate: LastPrice){
         if let connectStat = lastUpdate.connectStatus {

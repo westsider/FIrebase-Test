@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
          
             }
         }
-        
+
         FirebaseApp.configure()
         
         return true
