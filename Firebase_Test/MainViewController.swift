@@ -51,7 +51,7 @@ class MainViewController: UIViewController {
             if success {
                 print("\n*** Notifiation Permission Granted ***\n")
             } else {
-                print("\n----------------------------------------------------------\n------------ There was a problem with permissions ---------------\n----------------------------------------------------------\n\(String(describing: error))")
+                print("\n------------ There was a problem with permissions ---------------\n\(String(describing: error))")
             }
         }
     }
@@ -217,11 +217,13 @@ class MainViewController: UIViewController {
         }
 
     }
-    //MARK: - TODO notification if server disconnects
+
     // Bottom lower right - Connected
     func serverConLable(lastUpdate: LastPrice){
         if let connectStat = lastUpdate.connectStatus {
             serverConnectedLable.text = connectStat
+            let myContent = ["Server Status", "Connetion Update", connectStat] // watch skips middle subtitle
+            sendNotification(content: myContent)
         } else {
             serverConnectedLable.text = "loading"
         }
