@@ -31,6 +31,10 @@ class MainViewController: UIViewController {
     
     var currentShortEntryPrice:Double?
     
+    var myTimer = TimeUtility()
+    
+    var theSeconds = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -99,13 +103,12 @@ class MainViewController: UIViewController {
         if (debug) {
             print("\ninLong: \(String(describing: lastUpdate.inLong)) inShort: \(String(describing: lastUpdate.inShort)) longE: \(String(describing: firebaseLink.currentLongEntryPrice)) shortE: \(String(describing: firebaseLink.currentShortEntryPrice)) close: \(String(describing: lastUpdate.close))\n")
         }
-        
         if let inLong = lastUpdate.inLong,
             let inShort = lastUpdate.inShort,
-            let longE:Double = firebaseLink.currentLongEntryPrice,
-            let shortE:Double = firebaseLink.currentShortEntryPrice,
             let close = lastUpdate.close {
             
+            let longE:Double = firebaseLink.currentLongEntryPrice
+            let shortE:Double = firebaseLink.currentShortEntryPrice
             var lastPriceUpdateTop:String?
             
             lastPriceTop.textColor = #colorLiteral(red: 0.6642242074, green: 0.6642400622, blue: 0.6642315388, alpha: 1)
@@ -168,9 +171,11 @@ class MainViewController: UIViewController {
                 priceDifferenceLabel.text = "loading"
             }
         }
+        upDateTimer()
     }
     
-    //MARK: - TODO  notify is last update > 31 minutes
+    //  MARK: - TODO  notify is last update > 31 minutes
+    //  this only runs when the server updates, need to take this out of the loop and run every 5 mins bettween 630 - 1 pm
     //  Bottom - upper right = serverConnectTime
     //  Bottom - upper left = lastUpdateTime, Bottom - lower left = priceCurrentLabel
     func serverConnectedLable(lastUpdate: LastPrice, debug: Bool) {
@@ -185,10 +190,10 @@ class MainViewController: UIViewController {
                 // time elaplse greater than 31 mins or 1 hour = send notifiation
                 if ( convertedDate.2 ) {
                     print("\nSending late update alert!\n")
-                    let myContent = ["Server Status", "Suspicious Time", "Last update was \(convertedDate.0) ago"] // watch skips middle subtitle
+                    let myContent = ["Server Status", "Update is Late", "Last update was \(convertedDate.0) ago"] // watch skips middle subtitle
                     sendNotification(content: myContent)
                 }
-                priceCurrentLabel.text = convertedDate.0    // lower left
+                priceCurrentLabel.text = "\(convertedDate.0 ) elapsed"   // lower left
                 // correct for 9:0 to 9:00
                 var timeOfLastUpdate = convertedDate.1
                 //print(timeOfLastUpdate)
@@ -199,7 +204,7 @@ class MainViewController: UIViewController {
                 } else if (timeOfLastUpdate.characters.count == 4 && firstChar == "1" ) {
                     timeOfLastUpdate = timeOfLastUpdate + "0"
                 }
-                lastUpdateTime.text = timeOfLastUpdate       // bottom upper left
+                lastUpdateTime.text = "Last Update: \(timeOfLastUpdate)"       // bottom upper left
             }
             
             if let serverDateTime = lastUpdate.connectTime {
@@ -229,11 +234,28 @@ class MainViewController: UIViewController {
         if let connectStat = lastUpdate.connectStatus {
             serverConnectedLable.text = connectStat
             let myContent = ["Server Status", "Connetion Update", connectStat] // watch skips middle subtitle
-            sendNotification(content: myContent)
+            if (connectStat != "Connected") {
+                sendNotification(content: myContent)
+            }
         } else {
             serverConnectedLable.text = "loading"
         }
-        //serverConnectedLable.text = "????"
+    }
+    
+    func upDateTimer() {
+        if ( myTimer.isMarketHours(begin: [6,35], end: [16,10])) {
+            
+            // 60 * 5 = 300 sec for 5 min
+            myTimer.timerDuration(Seconds: 60) { ( finished ) in
+                if finished {
+                    DispatchQueue.main.async {
+                        print("\nUpdating UI...")
+                        self.updateUISegmented()
+                    }
+                    
+                }
+            }
+        }
     }
     
 }
