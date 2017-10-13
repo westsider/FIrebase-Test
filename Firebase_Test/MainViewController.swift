@@ -185,26 +185,42 @@ class MainViewController: UIViewController {
             priceCurrentLabel.text = "pCurLabel"
             lastUpdateTime.text =  "lUpdateTime"
         } else {
-            if let lastTime = lastUpdate.date {
-                let convertedDate = DateHelper().calcTimeFromLastUpdate(lastTime: lastTime)
+            if let lastTime = lastUpdate.date { // "10/12/2017 3:30:00 PM"
+                
+                // this is now correct
+                let server = DateHelper().convertServeDateToLocal(server: lastTime, debug: true)
+                let local = DateHelper().convertUTCtoLocal(debug: true, UTC: Date())
+              
+let alert = DateHelper().calcDiffInMinHours(from: local, server: server, debug: false)
+                
                 // time elaplse greater than 31 mins or 1 hour = send notifiation
-                if ( convertedDate.2 ) {
+                if ( alert.0 ) {
                     print("\nSending late update alert!\n")
-                    let myContent = ["Server Status", "Update is Late", "Last update was \(convertedDate.0) ago"] // watch skips middle subtitle
+                    let myContent = ["Server Status", "Update is Late", "Last update was \(alert.1):\(alert.2) ago"] // watch skips middle subtitle
                     sendNotification(content: myContent)
                 }
-                priceCurrentLabel.text = "\(convertedDate.0 ) elapsed"   // lower left
-                // correct for 9:0 to 9:00
-                var timeOfLastUpdate = convertedDate.1
-                //print(timeOfLastUpdate)
-                let firstChar =    String(timeOfLastUpdate.characters.prefix(1))
-                //print("First Char is \(firstChar)")
-                if (timeOfLastUpdate.characters.count == 3) { // 5:0
-                    timeOfLastUpdate = timeOfLastUpdate + "0"
-                } else if (timeOfLastUpdate.characters.count == 4 && firstChar == "1" ) {
-                    timeOfLastUpdate = timeOfLastUpdate + "0"
-                }
-                lastUpdateTime.text = "Last Update: \(timeOfLastUpdate)"       // bottom upper left
+                
+                // data is correct
+                // correct on lable
+                // 5:21 elapsed not correct
+                
+                priceCurrentLabel.text = "\(alert.1):\(alert.2) elapsed"   // lower left
+//                // correct for 9:0 to 9:00
+//                var timeOfLastUpdate = convertedDate.1
+//                //print(timeOfLastUpdate)
+//                let firstChar =    String(timeOfLastUpdate.characters.prefix(1))
+//                //print("First Char is \(firstChar)")
+//                if (timeOfLastUpdate.characters.count == 3) { // 5:0
+//                    timeOfLastUpdate = timeOfLastUpdate + "0"
+//                } else if (timeOfLastUpdate.characters.count == 4 && firstChar == "1" ) {
+//                    timeOfLastUpdate = timeOfLastUpdate + "0"
+//                }
+//                var calendar = Calendar.current
+//                calendar.timeZone = TimeZone(identifier: "EST")!
+//                let comp = calendar.dateComponents([.hour, .minute], from: server)
+//                let hour = comp.hour
+//                let minute = comp.minute
+                lastUpdateTime.text = DateHelper().convertServeDateToLocalString(server: server, debug: true)
             }
             
             if let serverDateTime = lastUpdate.connectTime {
