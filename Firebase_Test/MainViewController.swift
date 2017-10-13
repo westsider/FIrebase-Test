@@ -173,11 +173,7 @@ class MainViewController: UIViewController {
         }
         upDateTimer()
     }
-    
-    //  MARK: - TODO  notify is last update > 31 minutes
-    //  this only runs when the server updates, need to take this out of the loop and run every 5 mins bettween 630 - 1 pm
-    //  Bottom - upper right = serverConnectTime
-    //  Bottom - upper left = lastUpdateTime, Bottom - lower left = priceCurrentLabel
+
     func serverConnectedLable(lastUpdate: LastPrice, debug: Bool) {
      
         if (debug) {
@@ -185,56 +181,28 @@ class MainViewController: UIViewController {
             priceCurrentLabel.text = "pCurLabel"
             lastUpdateTime.text =  "lUpdateTime"
         } else {
-            if let lastTime = lastUpdate.date { // "10/12/2017 3:30:00 PM"
-                
-                // this is now correct
-                let server = DateHelper().convertServeDateToLocal(server: lastTime, debug: true)
-                let local = DateHelper().convertUTCtoLocal(debug: true, UTC: Date())
-              
-let alert = DateHelper().calcDiffInMinHours(from: local, server: server, debug: false)
-                
-                // time elaplse greater than 31 mins or 1 hour = send notifiation
+            if let lastTime = lastUpdate.date {
+
+                let server = DateHelper().convertServeDateToLocal(server: lastTime, debug: false)
+                let local = DateHelper().convertUTCtoLocal(debug: false, UTC: Date())
+                let alert = DateHelper().calcDiffInMinHours(from: local, server: server, debug: false)
                 if ( alert.0 ) {
                     print("\nSending late update alert!\n")
-                    let myContent = ["Server Status", "Update is Late", "Last update was \(alert.1):\(alert.2) ago"] // watch skips middle subtitle
+                    let myContent = ["Server Status", "Update is Late", "Last update was \(alert.1):\(alert.2) ago"]
                     sendNotification(content: myContent)
                 }
-                
-                // data is correct
-                // correct on lable
-                // 5:21 elapsed not correct
-                
                 priceCurrentLabel.text = "\(alert.1):\(alert.2) elapsed"   // lower left
-//                // correct for 9:0 to 9:00
-//                var timeOfLastUpdate = convertedDate.1
-//                //print(timeOfLastUpdate)
-//                let firstChar =    String(timeOfLastUpdate.characters.prefix(1))
-//                //print("First Char is \(firstChar)")
-//                if (timeOfLastUpdate.characters.count == 3) { // 5:0
-//                    timeOfLastUpdate = timeOfLastUpdate + "0"
-//                } else if (timeOfLastUpdate.characters.count == 4 && firstChar == "1" ) {
-//                    timeOfLastUpdate = timeOfLastUpdate + "0"
-//                }
-//                var calendar = Calendar.current
-//                calendar.timeZone = TimeZone(identifier: "EST")!
-//                let comp = calendar.dateComponents([.hour, .minute], from: server)
-//                let hour = comp.hour
-//                let minute = comp.minute
                 lastUpdateTime.text = DateHelper().convertServeDateToLocalString(server: server, debug: true)
             }
             
             if let serverDateTime = lastUpdate.connectTime {
                 let timeOnly = serverDateTime.components(separatedBy: " ")
-                //print("/nIn ServerDateTime: \(serverDateTime) _______ \(timeOnly)")
-                // expecting array of 3
                 if ( timeOnly.count < 3 ) {
-                    serverConnectTime?.text = "00:00"       // Bottom -  upper right
+                    serverConnectTime?.text = "00:00"               // Bottom -  upper right
                     return
                 }
                 let arr = timeOnly[1].components(separatedBy: ":")
-                //print("Arrary: \(arr[0]) \(arr[1])")
                 var hour = Int(arr[0])      // hour is nil
-                //print("Hour: \(String(describing: hour))")
                 hour = hour! - 3 // adj for EST
                 let min = arr[1]
                 serverConnectTime?.text = "\(hour!)" + ":" + min    // Bottom -  upper right
@@ -242,7 +210,6 @@ let alert = DateHelper().calcDiffInMinHours(from: local, server: server, debug: 
                 serverConnectTime?.text = "No Data"                 // Bottom -  upper right
             }
         }
-
     }
 
     // Bottom lower right - Connected
@@ -259,16 +226,14 @@ let alert = DateHelper().calcDiffInMinHours(from: local, server: server, debug: 
     }
     
     func upDateTimer() {
-        if ( myTimer.isMarketHours(begin: [6,35], end: [16,10])) {
-            
+        if ( myTimer.isMarketHours(begin: [6,35], end: [13,10])) {
             // 60 * 5 = 300 sec for 5 min
-            myTimer.timerDuration(Seconds: 60) { ( finished ) in
+            myTimer.timerDuration(Seconds: 300) { ( finished ) in
                 if finished {
                     DispatchQueue.main.async {
                         print("\nUpdating UI...")
                         self.updateUISegmented()
                     }
-                    
                 }
             }
         }
