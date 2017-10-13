@@ -1,4 +1,10 @@
-//: Playground - noun: a place where people can play
+//
+//  Time +  Timer.swift
+//  Firebase_Test
+//
+//  Created by Warren Hansen on 10/1/17.
+//  Copyright © 2017 Warren Hansen. All rights reserved.
+//
 
 import UIKit
 import Foundation
@@ -41,6 +47,21 @@ class TimeUtility {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// this is here if you want a countdown timer
 /*
  var timer = Timer()
  //var seconds = 1000

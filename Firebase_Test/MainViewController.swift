@@ -183,7 +183,7 @@ class MainViewController: UIViewController {
         } else {
             if let lastTime = lastUpdate.date {
 
-                let server = DateHelper().convertServeDateToLocal(server: lastTime, debug: false)
+                let server = DateHelper().convertServeDateToLocal(server: lastTime, debug: true)
                 let local = DateHelper().convertUTCtoLocal(debug: false, UTC: Date())
                 let alert = DateHelper().calcDiffInMinHours(from: local, server: server, debug: false)
                 if ( alert.0 ) {
@@ -191,8 +191,10 @@ class MainViewController: UIViewController {
                     let myContent = ["Server Status", "Update is Late", "Last update was \(alert.1):\(alert.2) ago"]
                     sendNotification(content: myContent)
                 }
-                priceCurrentLabel.text = "\(alert.1):\(alert.2) elapsed"   // lower left
-                lastUpdateTime.text = DateHelper().convertServeDateToLocalString(server: server, debug: true)
+                
+                lastUpdateTime.text = DateHelper().convertServeDateToLocalString(server: server, debug: true)   // lower left high
+                
+                priceCurrentLabel.text = "\(alert.1):\(alert.2) elapsed"                                        // lower left low
             }
             
             if let serverDateTime = lastUpdate.connectTime {
