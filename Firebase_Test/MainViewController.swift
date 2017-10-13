@@ -199,16 +199,12 @@ class MainViewController: UIViewController {
             }
             
             if let serverDateTime = lastUpdate.connectTime {
-                let timeOnly = serverDateTime.components(separatedBy: " ")
-                if ( timeOnly.count < 3 ) {
-                    serverConnectTime?.text = "00:00"               // Bottom -  upper right
+                let serverDateTimeArr = serverDateTime.components(separatedBy: " ")
+                if ( serverDateTimeArr.count < 3 ) {
+                    serverConnectTime?.text = "parse time fail"               // Bottom -  upper right
                     return
                 }
-                let arr = timeOnly[1].components(separatedBy: ":")
-                var hour = Int(arr[0])      // hour is nil
-                hour = hour! - 3 // adj for EST
-                let min = arr[1]
-                serverConnectTime?.text = "\(hour!)" + ":" + min    // Bottom -  upper right
+                serverConnectTime?.text = "\(serverDateTimeArr[1]) \(serverDateTimeArr[2])"     // Bottom -  upper right
             } else {
                 serverConnectTime?.text = "No Data"                 // Bottom -  upper right
             }
