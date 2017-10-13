@@ -99,7 +99,7 @@ class MainViewController: UIViewController {
         serverConLable(lastUpdate: lastUpdate!)
     }
     
-    func calcEntryAndOpenProfit(lastUpdate: LastPrice!, debug: Bool) {
+    func calcEntryAndOpenProfit(lastUpdate: LastPrice!, debug: Bool) {  // update devery 5 min RTH
         if (debug) {
             print("\ninLong: \(String(describing: lastUpdate.inLong)) inShort: \(String(describing: lastUpdate.inShort)) longE: \(String(describing: firebaseLink.currentLongEntryPrice)) shortE: \(String(describing: firebaseLink.currentShortEntryPrice)) close: \(String(describing: lastUpdate.close))\n")
         }
@@ -149,7 +149,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    func priceDifferenceLables( thisClose: Double) {
+    func priceDifferenceLables( thisClose: Double) {         // update devery 5 min RTH
         let index = firebaseLink.lastPriceList.count
         if (index > 3) {
             let priorBar = firebaseLink.lastPriceList[index-2]
@@ -171,10 +171,11 @@ class MainViewController: UIViewController {
                 priceDifferenceLabel.text = "loading"
             }
         }
-        upDateTimer()
+        upDateTimer()  // only at 6:30, 7, 730, 800, 830, 900, 930, 10, 1030, 1100, 1130,1200, 1230
+        // this automatically syncs after 1st hour
     }
 
-    func serverConnectedLable(lastUpdate: LastPrice, debug: Bool) {
+    func serverConnectedLable(lastUpdate: LastPrice, debug: Bool) {  // update devery 5 min RTH
      
         if (debug) {
             serverConnectTime?.text = "sConTime"
@@ -184,16 +185,16 @@ class MainViewController: UIViewController {
             if let lastTime = lastUpdate.date {
 
                 let server = DateHelper().convertServeDateToLocal(server: lastTime, debug: true)
-                let local = DateHelper().convertUTCtoLocal(debug: false, UTC: Date())
-                let alert = DateHelper().calcDiffInMinHours(from: local, server: server, debug: false)
+                let local = DateHelper().convertUTCtoLocal(debug: true, UTC: Date())
+                let alert = DateHelper().calcDiffInMinHours(from: local, server: server, debug: true)
                 if ( alert.0 ) {
                     print("\nSending late update alert!\n")
                     let myContent = ["Server Status", "Update is Late", "Last update was \(alert.1):\(alert.2) ago"]
                     sendNotification(content: myContent)
                 }
                 
-                lastUpdateTime.text = DateHelper().convertServeDateToLocalString(server: server, debug: true)   // lower left high
-                
+                lastUpdateTime.text = DateHelper().convertServeDateToLocalString(server: server, debug: false)   // lower left high
+// alert.2 is the cue for the circle... 2, 5, 7, 10, 12
                 priceCurrentLabel.text = "\(alert.1):\(alert.2) elapsed"                                        // lower left low
             }
             
@@ -215,7 +216,7 @@ class MainViewController: UIViewController {
     }
 
     // Bottom lower right - Connected
-    func serverConLable(lastUpdate: LastPrice){
+    func serverConLable(lastUpdate: LastPrice){      // update devery 5 min RTH
         if let connectStat = lastUpdate.connectStatus {
             serverConnectedLable.text = connectStat
             let myContent = ["Server Status", "Connetion Update", connectStat] // watch skips middle subtitle
