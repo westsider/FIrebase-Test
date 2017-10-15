@@ -37,7 +37,7 @@ class MainViewController: UIViewController {
     
     var counter = 7 // this sets ring mode
     
-    let alert = [0, 5,10,15,20,25,30,35, 40, 45]
+    var alertForAnnimation = 0 //  [0, 5,10,15,20,25,30,35, 40, 45]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,13 +51,16 @@ class MainViewController: UIViewController {
             }
         }
         initNotificaationSetupCheck()
-       annimateCircle()
+       //annimateCircle()
     }
     
-    func annimateCircle() {
+    func annimateCircle(alert:Int) {
+        
+        //alert = alert.2
+        
         let replicatorLayer = CAReplicatorLayer()
         replicatorLayer.frame = circleView.bounds
-        replicatorLayer.instanceCount = alert[counter]
+        replicatorLayer.instanceCount = alert   // alert[counter]
         replicatorLayer.instanceDelay = CFTimeInterval(1 / 30.0)
         replicatorLayer.preservesDepth = false
         replicatorLayer.instanceColor = UIColor.white.cgColor
@@ -79,9 +82,9 @@ class MainViewController: UIViewController {
         
         
         
-        counter = counter + 1
-        if alert[counter] >= 40 {
-            counter = 0
+        //counter = counter + 1
+        if alert >= 40 {    //alert[counter]
+            //counter = 0
             // red layer
             replicatorLayer.instanceRedOffset = 0
             replicatorLayer.instanceGreenOffset = -0.5
@@ -98,11 +101,7 @@ class MainViewController: UIViewController {
             instanceLayer.add(fadeAnimation, forKey: "FadeAnimation")
         }
     }
-    
-    
 
-
-    
     func initNotificaationSetupCheck() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge ])
         { ( success, error) in
@@ -249,6 +248,10 @@ class MainViewController: UIViewController {
                 
                 lastUpdateTime.text = DateHelper().convertServeDateToLocalString(server: server, debug: false)   // lower left high
 // alert.2 is the cue for the circle... 2, 5, 7, 10, 12
+                // alertForAnnimation = alert.2
+                annimateCircle(alert: alert.2)
+                
+                print("\n----------------------\nWill this control my circle? \(alert.2)\n need 0 - 7")
                 priceCurrentLabel.text = "\(alert.1):\(alert.2) elapsed"                                        // lower left low
             }
             
