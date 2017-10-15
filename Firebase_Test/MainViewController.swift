@@ -35,7 +35,7 @@ class MainViewController: UIViewController {
     
     var myTimer = TimeUtility()
     
-    var counter = 7
+    var counter = 7 // this sets ring mode
     
     let alert = [0, 5,10,15,20,25,30,35, 40, 45]
 
