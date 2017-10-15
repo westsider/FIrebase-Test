@@ -23,6 +23,8 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var serverConnectTime: UILabel!
     
+    @IBOutlet weak var circleView: UIView!
+    
     @IBOutlet weak var lastPriceTop: UILabel!
     
     let firebaseLink = FirebaseLink()
@@ -33,8 +35,10 @@ class MainViewController: UIViewController {
     
     var myTimer = TimeUtility()
     
-    var theSeconds = 0
+    var counter = 7
     
+    let alert = [0, 5,10,15,20,25,30,35, 40, 45]
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,7 +51,57 @@ class MainViewController: UIViewController {
             }
         }
         initNotificaationSetupCheck()
+       annimateCircle()
     }
+    
+    func annimateCircle() {
+        let replicatorLayer = CAReplicatorLayer()
+        replicatorLayer.frame = circleView.bounds
+        replicatorLayer.instanceCount = alert[counter]
+        replicatorLayer.instanceDelay = CFTimeInterval(1 / 30.0)
+        replicatorLayer.preservesDepth = false
+        replicatorLayer.instanceColor = UIColor.white.cgColor
+        // blue layer
+        replicatorLayer.instanceRedOffset = -0.6
+        replicatorLayer.instanceGreenOffset = -0.6
+        replicatorLayer.instanceBlueOffset =  0
+        replicatorLayer.instanceAlphaOffset = 0.0
+        
+        let angle = Float(Double.pi * 2.0) / 30
+        replicatorLayer.instanceTransform = CATransform3DMakeRotation(CGFloat(angle), 0.0, 0.0, 1.0)
+        circleView.layer.addSublayer(replicatorLayer)
+        let instanceLayer = CALayer()
+        let layerWidth: CGFloat = 5.0
+        let midX = circleView.bounds.midX - layerWidth / 2.0
+        instanceLayer.frame = CGRect(x: midX, y: 0.0, width: layerWidth, height: layerWidth * 3.0)
+        instanceLayer.backgroundColor = UIColor.white.cgColor
+        replicatorLayer.addSublayer(instanceLayer)
+        
+        
+        
+        counter = counter + 1
+        if alert[counter] >= 40 {
+            counter = 0
+            // red layer
+            replicatorLayer.instanceRedOffset = 0
+            replicatorLayer.instanceGreenOffset = -0.5
+            replicatorLayer.instanceBlueOffset =  -0.5
+            replicatorLayer.instanceAlphaOffset = 0.0
+            
+            let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+            fadeAnimation.fromValue = 1.0
+            fadeAnimation.toValue = 0
+            fadeAnimation.duration = 3
+            fadeAnimation.repeatCount = Float.greatestFiniteMagnitude
+            
+            instanceLayer.opacity = 0.0
+            instanceLayer.add(fadeAnimation, forKey: "FadeAnimation")
+        }
+    }
+    
+    
+
+
     
     func initNotificaationSetupCheck() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge ])
