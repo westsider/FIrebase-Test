@@ -13,6 +13,14 @@ import SciChart
 
 class ChartViewController: UIViewController {
 
+    @IBOutlet weak var chartView: UIView!
+    
+    @IBOutlet weak var daysLabel: UILabel!
+    
+    @IBOutlet weak var stepper: UIStepper!
+    
+    let xAxis = SCICategoryDateTimeAxis()
+    
     var lastPriceList = [LastPrice]()
     
     var surface = SCIChartSurface()
@@ -30,11 +38,16 @@ class ChartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        stepper.maximumValue = 120
+//        stepper.minimumValue = 7
+//        stepper.stepValue = 7
+//        stepper.wraps = false
+        
         addSurface()
         if UIDevice().model == "iPad" {
-            addAxis(BarsToShow: 75)
+            addAxis(BarsToShow: 150)
         } else {
-           addAxis(BarsToShow: 150)
+           addAxis(BarsToShow: 75)
         }
         addDefaultModifiers()
         addDataSeries()
@@ -52,11 +65,13 @@ class ChartViewController: UIViewController {
         }
         
     }
-
+    
+    
+    
     fileprivate func addSurface() {
-        surface = SCIChartSurface(frame: self.view.bounds)
+        surface = SCIChartSurface(frame: self.chartView.bounds)
         surface.translatesAutoresizingMaskIntoConstraints = true
-        surface.frame = self.view.bounds
+        surface.frame = self.chartView.bounds
         surface.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         // background color
         surface.backgroundColor = .white
@@ -72,7 +87,7 @@ class ChartViewController: UIViewController {
         let totalBars = lastPriceList.count
         let rangeStart = totalBars - BarsToShow
         // horizontal - Date axis
-        let xAxis = SCICategoryDateTimeAxis()
+        
         xAxis.visibleRange = SCIDoubleRange(min: SCIGeneric(rangeStart), max: SCIGeneric(totalBars))
         xAxis.growBy = SCIDoubleRange(min: SCIGeneric(0.1), max: SCIGeneric(0.1))
         
@@ -149,6 +164,15 @@ class ChartViewController: UIViewController {
 
         
         surface.yAxes.add(yAxis)
+    }
+    
+    @IBAction func daysStepper(_ sender: UIStepper) {
+        let stepperNumber = Int(sender.value)
+        daysLabel.text = "\(sender.value) Days"
+        let totalBars = lastPriceList.count
+        let rangeStart = totalBars - stepperNumber
+        // horizontal - Date axis
+        xAxis.visibleRange = SCIDoubleRange(min: SCIGeneric(rangeStart), max: SCIGeneric(totalBars))
     }
     
     fileprivate func addDataSeries() {
@@ -228,7 +252,7 @@ class ChartViewController: UIViewController {
     func addDefaultModifiers() {
         
         let xAxisDragmodifier = SCIXAxisDragModifier()
-        xAxisDragmodifier.dragMode = .scale
+        xAxisDragmodifier.dragMode = .pan
         xAxisDragmodifier.clipModeX = .none
         let yAxisDragmodifier = SCIYAxisDragModifier()
         yAxisDragmodifier.dragMode = .pan
