@@ -85,12 +85,39 @@
                     <view key="view" contentMode="scaleToFill" id="NiO-kb-2JT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="sw2-yU-stG">
+                                <rect key="frame" x="33.5" y="69" width="94" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="LUI-fi-qSm"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </stepper>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a86-sy-KAu">
+                                <rect key="frame" x="135.5" y="73" width="50" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="s54-xp-apf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="a86-sy-KAu" firstAttribute="leading" secondItem="sw2-yU-stG" secondAttribute="trailing" constant="8" id="GmZ-gD-jp5"/>
+                            <constraint firstItem="sw2-yU-stG" firstAttribute="top" secondItem="UEu-JO-TzX" secondAttribute="bottom" constant="49" id="J7Y-oT-sgo"/>
+                            <constraint firstItem="a86-sy-KAu" firstAttribute="leading" secondItem="sw2-yU-stG" secondAttribute="trailing" constant="8" id="Jsg-Ik-6e0"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="a86-sy-KAu" secondAttribute="trailing" constant="173.5" id="nAq-H5-kGY"/>
+                            <constraint firstItem="zc8-Xg-9fd" firstAttribute="top" secondItem="a86-sy-KAu" secondAttribute="bottom" constant="573" id="nEd-Pr-pKt"/>
+                            <constraint firstItem="a86-sy-KAu" firstAttribute="top" secondItem="UEu-JO-TzX" secondAttribute="bottom" constant="53" id="nMV-jw-GDK"/>
+                            <constraint firstItem="zc8-Xg-9fd" firstAttribute="top" secondItem="sw2-yU-stG" secondAttribute="bottom" constant="569" id="sal-Tf-a8X"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6sv-zY-E4V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2305" y="131"/>
+            <point key="canvasLocation" x="2304.8000000000002" y="130.88455772113943"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="QmS-15-CzF">

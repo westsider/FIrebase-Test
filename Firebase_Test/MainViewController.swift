@@ -74,7 +74,7 @@ class MainViewController: UIViewController {
         replicatorLayer.instanceTransform = CATransform3DMakeRotation(CGFloat(angle), 0.0, 0.0, 1.0)
         circleView.layer.addSublayer(replicatorLayer)
         let instanceLayer = CALayer()
-        let layerWidth: CGFloat = 5.0
+        let layerWidth: CGFloat = 7.5
         let midX = circleView.bounds.midX - layerWidth / 2.0
         instanceLayer.frame = CGRect(x: midX, y: 0.0, width: layerWidth, height: layerWidth * 3.0)
         instanceLayer.backgroundColor = UIColor.white.cgColor
@@ -92,9 +92,9 @@ class MainViewController: UIViewController {
             replicatorLayer.instanceAlphaOffset = 0.0
             
             let fadeAnimation = CABasicAnimation(keyPath: "opacity")
-            fadeAnimation.fromValue = 1.0
-            fadeAnimation.toValue = 0
-            fadeAnimation.duration = 3
+            fadeAnimation.fromValue = 0.0
+            fadeAnimation.toValue = 1
+            fadeAnimation.duration = 2
             fadeAnimation.repeatCount = Float.greatestFiniteMagnitude
             
             instanceLayer.opacity = 0.0
@@ -249,7 +249,8 @@ class MainViewController: UIViewController {
                 lastUpdateTime.text = DateHelper().convertServeDateToLocalString(server: server, debug: false)   // lower left high
 // alert.2 is the cue for the circle... 2, 5, 7, 10, 12
                 // alertForAnnimation = alert.2
-                annimateCircle(alert: alert.2)
+                let lastConnectionTotal = alert.1 + alert.2
+                annimateCircle(alert: lastConnectionTotal)
                 
                 print("\n----------------------\nWill this control my circle? \(alert.2)\n need 0 - 7")
                 priceCurrentLabel.text = "\(alert.1):\(alert.2) elapsed"                                        // lower left low
