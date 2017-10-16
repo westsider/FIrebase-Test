@@ -51,14 +51,14 @@ class MainViewController: UIViewController {
             }
         }
         initNotificaationSetupCheck()
-       //annimateCircle()
     }
     
-    func annimateCircle(alert:Int) {
-        
-        //alert = alert.2
-        
+    func annimateCircle(alert:Int, reset: Bool) {
+
         let replicatorLayer = CAReplicatorLayer()
+        if ( reset ) {
+            replicatorLayer.removeFromSuperlayer()
+        }
         replicatorLayer.frame = circleView.bounds
         replicatorLayer.instanceCount = alert   // alert[counter]
         replicatorLayer.instanceDelay = CFTimeInterval(1 / 30.0)
@@ -80,11 +80,7 @@ class MainViewController: UIViewController {
         instanceLayer.backgroundColor = UIColor.white.cgColor
         replicatorLayer.addSublayer(instanceLayer)
         
-        
-        
-        //counter = counter + 1
-        if alert >= 40 {    //alert[counter]
-            //counter = 0
+        if alert >= 40 {
             // red layer
             replicatorLayer.instanceRedOffset = 0
             replicatorLayer.instanceGreenOffset = -0.5
@@ -252,11 +248,13 @@ class MainViewController: UIViewController {
                 lastUpdateTime.text = serverDateString.2   // lower left high
                 // alert.2 is the cue for the circle... 2, 5, 7, 10, 12
                 // alertForAnnimation = alert.2
-                let lastConnectionTotal = alert.1 + alert.2
-                annimateCircle(alert: lastConnectionTotal)
-                
-                print("\n----------------------\nWill this control my circle? \(alert.2)\n need 0 - 7")
-                priceCurrentLabel.text = "\(alert.1):\(alert.2) elapsed"                                        // lower left low
+    let lastConnectionMinuteTotal = alert.3
+    print("\nSending Data to animation circle! lastCommectionTotal: \(lastConnectionMinuteTotal) if 0 then reset!")
+    var reset = false
+    if ( lastConnectionMinuteTotal == 0 ) { reset = true}
+    annimateCircle(alert: lastConnectionMinuteTotal, reset: reset)
+    print("\n----------------------\nWill this control my circle? \(lastConnectionMinuteTotal)\n need 0 - 7")
+    priceCurrentLabel.text = "\(alert.1):\(alert.2) elapsed"                                        // lower left low
             }
             
             if let serverDateTime = lastUpdate.connectTime {
