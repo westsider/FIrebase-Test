@@ -228,6 +228,8 @@ class MainViewController: UIViewController {
         // this automatically syncs after 1st hour
     }
 
+    // problem area -----------------------------------------------------------------------------------
+    // may fail to work in other time zones
     func serverConnectedLable(lastUpdate: LastPrice, debug: Bool) {  // update devery 5 min RTH
      
         if (debug) {
@@ -237,17 +239,18 @@ class MainViewController: UIViewController {
         } else {
             if let lastTime = lastUpdate.date {
 
-                let server = DateHelper().convertServeDateToLocal(server: lastTime, debug: true)
-                let local = DateHelper().convertUTCtoLocal(debug: true, UTC: Date())
-                let alert = DateHelper().calcDiffInMinHours(from: local, server: server, debug: true)
+                let serverDateString = DateHelper().convertServeDateToLocal(server: lastTime, debug: true)
+                let local = DateHelper().convertUTCtoLocal(debug: false, UTC: Date())
+                let alert = DateHelper().calcDiffInMinHours(from: local, server: serverDateString.0, debug: true)
+
                 if ( alert.0 ) {
                     print("\nSending late update alert!\n")
                     let myContent = ["Server Status", "Update is Late", "Last update was \(alert.1):\(alert.2) ago"]
                     sendNotification(content: myContent)
                 }
                 
-                lastUpdateTime.text = DateHelper().convertServeDateToLocalString(server: server, debug: false)   // lower left high
-// alert.2 is the cue for the circle... 2, 5, 7, 10, 12
+                lastUpdateTime.text = serverDateString.2   // lower left high
+                // alert.2 is the cue for the circle... 2, 5, 7, 10, 12
                 // alertForAnnimation = alert.2
                 let lastConnectionTotal = alert.1 + alert.2
                 annimateCircle(alert: lastConnectionTotal)
@@ -268,7 +271,9 @@ class MainViewController: UIViewController {
             }
         }
     }
-
+    // problem area -----------------------------------------------------------------------------------
+    // may fail to work in other time zones
+    
     // Bottom lower right - Connected
     func serverConLable(lastUpdate: LastPrice){      // update devery 5 min RTH
         if let connectStat = lastUpdate.connectStatus {
